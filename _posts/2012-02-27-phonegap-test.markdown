@@ -5,16 +5,16 @@ wordpress_id: 752
 layout: post
 wordpress_url: http://www.zhangabc.com/?p=752
 date: 2012-02-27 17:50:50 +08:00
-title: !binary |
-  UGhvbmVnYXDliJ3kvZPpqow=
+title:  Phonegap超级浅尝
+tagline: Hello Word!
 
 ---
 前阵子听 [@leiyi同学](http://www.startfeel.com/) 聊到可以用PhoneGap来搞移动应用，回家做了功课，发现这货相当强大，可以使用HTML+JS+CSS来写出适用于ios/andorid/...等等平台的应用，正如它网站的宣传图：
 
-![image](http://www.zhangabc.com/wp-content/uploads/2012/02/build4.png)
+![官方广告^_^](http://pemsys.duapp.com/blog/phonegap-test.png)
 
 
-然后我决定试用一下，费了18牛72虎之力终于下好了种种SDK（唉，家里的风速跟公司真是天上地下）… 最后小试了一把“Hello World”。<!--more-->
+然后我决定试用一下，费了18牛72虎之力终于下好了种种SDK（唉，家里的风速跟公司真是天上地下）… 最后小试了一把“Hello World”。
 
 实现相当简单，跟着官方的 [Get Started Guide](http://phonegap.com/start) 基本上完全不用太用力就可以在模拟器中完成。顺手记一句解决中文乱码问题…跟普通网页一样，文件编码与声明一致就OK。
 
