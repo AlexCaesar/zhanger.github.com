@@ -5,7 +5,7 @@ tagline: I Love U.
 ---
 {% include JB/setup %}
 
-![I love you!!](http://pemsys.duapp.com/blog/b1.png)
+![n_n](http://pemsys.duapp.com/blog/b1.png)
 
 <!--
 <ul class="posts">
@@ -15,7 +15,7 @@ tagline: I Love U.
 </ul>
 -->
 ## Categories
-<ul class="tag_box inline">
+<ul class="tag_box inline categories">
     {% assign categories_list = site.categories %}
     {% include JB/categories_list %}
 </ul>

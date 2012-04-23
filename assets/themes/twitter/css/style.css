@@ -59,6 +59,10 @@ html, body {
 	border-radius: 3px;
 	text-decoration:none;
 }
+.categories a {
+	background: #F0C1ED;
+
+}
 .tag_box a span{
 	vertical-align:super;
 	font-size:0.8em;
