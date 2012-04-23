@@ -13,17 +13,25 @@ title: !binary |
 
 
 ### 程序一：
+{% highlight php %}
+<?php
     $a = 'abc';
     $abc = 'ok';
     echo ${abc};
+?>
+{% endhighlight %}
 #### opcode ：(点击图片放大)
 ![php_zend_return^_^]( http://pemsys.duapp.com/blog/opcode_array_1.jpg)
 
 ### 程序二：
 
-    $a = 'abc';
-    $abc = 'ok';
-    echo {$abc};
+{% highlight php %}
+<?php
+$a = 'abc';
+$abc = 'ok';
+echo {$abc};
+?>
+{% endhighlight %}
 
 #### opcode ：(点击图片放大)
 ![php_zend_return^_^]( http://pemsys.duapp.com/blog/opcode_array_2.jpg)

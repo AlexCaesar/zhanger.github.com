@@ -1,8 +1,9 @@
 ---
 tags: markdown
 layout: page
-title: "Markdown语法介绍"
+title: "Markdown"
 description: "这里介绍了Markdown的一些语法和定义"
+group: navigation
 ---
 {% include JB/setup %}
 
