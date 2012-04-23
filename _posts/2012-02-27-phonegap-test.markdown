@@ -14,7 +14,7 @@ tagline: Hello Word!
 ![官方广告^_^](http://pemsys.duapp.com/blog/phonegap-test.png)
 
 
-然后我决定试用一下，费了18牛72虎之力终于下好了种种SDK（唉，家里的风速跟公司真是天上地下）… 最后小试了一把“Hello World”。
+然后我决定试用一下，费了18牛72虎之力终于下好了种种SDK（唉，家里的网速跟公司真是天上地下）… 最后小试了一把“Hello World”。
 
 实现相当简单，跟着官方的 [Get Started Guide](http://phonegap.com/start) 基本上完全不用太用力就可以在模拟器中完成。顺手记一句解决中文乱码问题…跟普通网页一样，文件编码与声明一致就OK。
 
