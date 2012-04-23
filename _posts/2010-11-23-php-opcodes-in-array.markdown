@@ -5,8 +5,7 @@ wordpress_id: 301
 layout: post
 wordpress_url: http://www.zhangabc.com/?p=301
 date: 2010-11-23 15:11:49 +08:00
-title: !binary |
-  5LuOb3Bjb2Rlc+eci3skYX3kuI4ke2F955qE5Yy65Yir
+title: "从opcodes看{$a}与${a}的区别"
 
 ---
 突然用到类似{$a}与${a}这样子的表达式，大约知道两者的区别，用OPCODE来做一个验证，记录如下:
