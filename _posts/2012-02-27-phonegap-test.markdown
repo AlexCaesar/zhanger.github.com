@@ -3,8 +3,8 @@ categories: mobile
 tags: app, phonegap, android
 wordpress_id: 752
 layout: post
-wordpress_url: http://www.zhangabc.com/?p=752
-date: 2012-02-27 17:50:50 +08:00
+wordpress_url: http://www.bc.com/?p=752
+date: 2012-02-27 17:50:50
 title:  Phonegap超级浅尝
 tagline: Hello Word!
 
