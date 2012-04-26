@@ -29,6 +29,7 @@ tagline: I Love U.
 ## To-Do
 
 *   一点点把原来的笔记和感悟整理到这里。。。。恩，期限是 ～ **1万年** 。
+*   [深入理解PHP内核(Thinking In PHP Internal)](http://www.php-internal.com)
 
 ## Friends
 <ul class="tag_box inline friends ">
