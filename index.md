@@ -28,8 +28,8 @@ tagline: I Love U.
 
 ## To-Do
 
-*   一点点把原来的笔记和感悟整理到这里。。。。恩，期限是 ～ **1万年** 。
 *   [深入理解PHP内核(Thinking In PHP Internal)](http://www.php-internal.com)
+*   一点点把原来的笔记和感悟整理到这里。。。。恩，期限是 ～ **1万年** 。
 
 ## Friends
 <ul class="tag_box inline friends ">
@@ -38,7 +38,6 @@ tagline: I Love U.
 <li><a href="http://www.reeze.cn">Zen Space</a></li>
 <li><a href="http://www.artskin.cn" title="一个朋友的博客:)">前端思考</a></li>
 <li><a href="http://www.lanbolee.com/blog" title="一很有喜感的同事的好玩的博客。">博之博</a></li>
-<li><a href="http://www.leivli.com" title="LeiVli’s Blog">技术&amp;生活</a></li>
 <li><a href="http://xiezhenye.com/" title="神仙的仙居" target="_blank">神仙的仙居</a></li>
 <li><a href="http://www.phppan.com" title="一个非常勤奋的小强！">胖子的空间</a></li>
 <li><a href="http://www.laruence.com/" title="一只很帅的牛。">风雪之隅</a></li>
