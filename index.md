@@ -41,4 +41,5 @@ tagline: I Love U.
 <li><a href="http://xiezhenye.com/" title="神仙的仙居" target="_blank">神仙的仙居</a></li>
 <li><a href="http://www.phppan.com" title="一个非常勤奋的小强！">胖子的空间</a></li>
 <li><a href="http://www.laruence.com/" title="一只很帅的牛。">风雪之隅</a></li>
+<li><a href="http://blog.eddie.com.tw/" title="一只很帅的牛。">高見龍</a></li>
 </ul>
