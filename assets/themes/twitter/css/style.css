@@ -1,6 +1,9 @@
 /* Override some defaults */
 html, body {
   background-color: #eee;
+  font-size: 14px;
+  font-family: "Galdeano","Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: black;
 }
 .navbar {
   margin-bottom: 0;
