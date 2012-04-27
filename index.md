@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Hello World!
-tagline: 一个编程爱好者的在线笔记。
+tagline:
 ---
 {% include JB/setup %}
 
