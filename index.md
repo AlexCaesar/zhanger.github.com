@@ -30,7 +30,8 @@ tagline: 一个编程爱好者的在线笔记。
 
 *   **iOS：Code highlight.......**
 *   [深入理解PHP内核(Thinking In PHP Internal)](http://www.php-internal.com)
-*   一点点把原来的笔记和感悟整理到这里。。。。恩，期限是 ～ **1万年** 。
+*   一点点把原来的笔记和感悟整理到这里。。。。恩，期限是 ～ **一万年** 。
+*   蛋疼时，美化一下博客 。
 
 ## Friends
 <ul class="tag_box inline friends ">
