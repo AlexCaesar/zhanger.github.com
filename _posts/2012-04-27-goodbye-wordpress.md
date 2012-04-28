@@ -2,7 +2,7 @@
 layout: post
 title: "再见，WordPres哥"
 description: "Drop WP"
-category: 吐槽与偏见 
+category: 吐槽不断 
 tags: [ 二着欢乐 ]
 ---
 {% include JB/setup %}
