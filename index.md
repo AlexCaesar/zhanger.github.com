@@ -31,8 +31,8 @@ tagline:
 *   **iOS：Code highlight.......**
 *   [深入理解PHP内核(Thinking In PHP Internal)](http://www.php-internal.com)
 *   一点点把原来的笔记和感悟整理到这里。。。。恩，期限是 ～ **一万年** 
-*   苦练SC2, 各种微操 
-*   通关暗黑2，花了双倍的钱，不通一下关说不过去 
+*   苦练SC2, 枪兵大叔～ 
+*   通关大菠萝2
 *   通关阿玛拉王国：惩罚
 *   蛋疼时，美化一下博客 
 
