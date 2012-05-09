@@ -48,3 +48,4 @@ tagline:
 <li><a href="http://www.laruence.com/" title="一只很帅的牛。">风雪之隅</a></li>
 <li><a href="http://blog.eddie.com.tw/" title="爱玩又爱现的家伙，哈哈。">高見龍</a></li>
 </ul>
+<object type="application/x-shockwave-flash" style="outline:none;" data="http://hosting.gmodules.com/ig/gadgets/file/112581010116074801021/hamster.swf?" width="300" height="225"><param name="movie" value="http://hosting.gmodules.com/ig/gadgets/file/112581010116074801021/hamster.swf?"></param><param name="AllowScriptAccess" value="always"></param><param name="wmode" value="opaque"></param></object>
