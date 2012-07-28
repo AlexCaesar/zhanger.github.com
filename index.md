@@ -25,7 +25,7 @@ tagline:
   {% assign tags_list = site.tags %}  
   {% include JB/tags_list %}
 </ul>
-
+<!--
 ## To-Do
 
 *   **iOS：Code highlight.......**
@@ -35,7 +35,7 @@ tagline:
 *   通关大菠萝2
 *   通关阿玛拉王国：惩罚
 *   蛋疼时，美化一下博客 
-
+-->
 ## Friends
 <ul class="tag_box inline friends ">
 <li><a href="http://www.startfeel.com">FU体验馆</a></li>
@@ -49,5 +49,4 @@ tagline:
 <li><a href="http://blog.eddie.com.tw/" title="爱玩又爱现的家伙，哈哈。">高見龍</a></li>
 <li><a href="http://www.jack-y.com" title="帅锅。">Jack-Y</a></li>
 </ul>
-## e...
-<object type="application/x-shockwave-flash" style="outline:none;" data="http://hosting.gmodules.com/ig/gadgets/file/112581010116074801021/hamster.swf?" width="300" height="225"><param name="movie" value="http://hosting.gmodules.com/ig/gadgets/file/112581010116074801021/hamster.swf?"></param><param name="AllowScriptAccess" value="always"></param><param name="wmode" value="opaque"></param></object>
+
