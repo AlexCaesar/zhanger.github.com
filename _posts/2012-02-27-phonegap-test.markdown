@@ -1,6 +1,6 @@
 --- 
 categories: mobile
-tags: app, phonegap, android
+tags: app phonegap android
 wordpress_id: 752
 layout: post
 wordpress_url: http://www.bc.com/?p=752

@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "目前Mac下最快的输入法(需要折腾)"
+title: "目前Mac下最快的输入法"
+tagline: "需要折腾"
 description: ""
 category: "mac"
-tags: ["mac", "input-method"]
+tags:  mac 
 ---
 {% include JB/setup %}
 

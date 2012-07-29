@@ -1,6 +1,6 @@
 --- 
 categories: php
-tags: opcodes, internal
+tags: opcodes internal
 wordpress_id: 301
 layout: post
 wordpress_url: http://www.zhangabc.com/?p=301
