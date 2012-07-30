@@ -160,3 +160,6 @@ html, body {
 	position: relative;
 	border: 0;
 }
+.navbar-inner {
+background-color: #BB89BA;
+}
