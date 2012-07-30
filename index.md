@@ -11,7 +11,7 @@ tagline:
 <div class="section">
   {% for post in site.posts  offset : 0 limit :1%}
   <div class="page-header">
-    <h1><a href="{{ post.url }}">{{ post.title }}</a> <small>{{ post.tagline }}</small></h1>
+    <h1 class="entry-title"><a href="{{ post.url }}">{{ post.title }}</a> <small>{{ post.tagline }}  {{ post.date | date_to_string }}</small></h1>
   </div>
   <div class="span8">
 

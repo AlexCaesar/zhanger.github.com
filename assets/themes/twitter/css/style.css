@@ -2,7 +2,7 @@
 html, body {
   background-color: #eee;
   font-size: 14px;
-  font-family: "Galdeano","Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: black;
 }
 .navbar {
@@ -152,3 +152,6 @@ html, body {
 .highlight .vg { color: #000000 } /* Name.Variable.Global */
 .highlight .vi { color: #000000 } /* Name.Variable.Instance */
 .highlight .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
+.span8 h3{
+	margin: 15px 0 7px 3px;
+}
