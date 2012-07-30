@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Hello World!
+title: Er|人生的幸福就是可以经常槑槑
 tagline:
 ---
 {% include JB/setup %}

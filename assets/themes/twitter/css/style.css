@@ -159,6 +159,7 @@ html, body {
 	cursor: text;
 	position: relative;
 	border: 0;
+	color:#005F6B;
 }
 .navbar-inner {
 background-color: #BB89BA;
