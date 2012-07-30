@@ -1,9 +1,8 @@
 /* Override some defaults */
 html, body {
   background-color: #eee;
-  font-size: 14px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: black;
+  font: 14px Helvetica,arial,freesans,clean,sans-serif;
 }
 .navbar {
   margin-bottom: 0;
@@ -153,5 +152,10 @@ html, body {
 .highlight .vi { color: #000000 } /* Name.Variable.Instance */
 .highlight .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
 .span8 h3{
-	margin: 15px 0 7px 3px;
+	margin: 20px 0 10px;
+	padding: 0;
+	font-weight: bold;
+	-webkit-font-smoothing: antialiased;
+	cursor: text;
+	position: relative;
 }
