@@ -158,4 +158,5 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 	cursor: text;
 	position: relative;
+	border: 0;
 }
