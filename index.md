@@ -52,6 +52,12 @@ tagline:
   {% include JB/tags_list %}
 </ul>
 
+<h2>Projects</h2>
+<ul class="tag_box inline">
+<li><a href="http://www.php-internal.com">深入理解PHP内核</a></li>
+</ul>
+</ul>
+
 <!--
 ## To-Do
 
