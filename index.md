@@ -44,7 +44,7 @@ tagline:
     {% assign categories_list = site.categories %}
     {% include JB/categories_list %}
 </ul>
-
+<br />
 
 <h2>Tags</h2>
 <ul class="tag_box inline">
@@ -52,11 +52,12 @@ tagline:
   {% include JB/tags_list %}
 </ul>
 
-<h2>Projects</h2>
+<br />
+<h2>O_O</h2>
 <ul class="tag_box inline">
 <li><a href="http://www.php-internal.com">深入理解PHP内核</a></li>
 </ul>
-</ul>
+<br />
 
 <!--
 ## To-Do
