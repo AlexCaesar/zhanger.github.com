@@ -42,6 +42,8 @@ Usage:
     </div>
     {% else %}
       {% if this_year != next_year %}
+        <li>&nbsp;</li>
+        <li>&nbsp;</li>
       </ul>
       </div>
       <div class="span6">
