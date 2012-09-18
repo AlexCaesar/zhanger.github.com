@@ -32,15 +32,15 @@ code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type
 看了前面的 [由opcodes找到其处理函数的方法](http://zhangabc.com/2011/08/27/find-opcodes-to-implements/), 比较容易就能在zend_init_opcodes_handlers数组中遍历到需要导出的函数名。
 
 
-升级后已经push request到鸟哥的github: https://github.com/laruence/opcodesdumper
+###关于源码构建
 
+{% highlight c %}
+源码地址：       https://github.com/laruence/opcodesdumper
+Makefile版源码： https://github.com/zhanger/opcodesdumper
+{% endhighlight  %}
 
-###关于构建
-
-鸟哥使用比较“高级”的autotools来自动构建，不过我认为这么一个小工具，Makefile足够了。
-于是还有一个Makefile版本用于自用：
-
-https://github.com/zhanger/opcodesdumper
+由于鸟哥使用比较“高级”的autotools来自动构建，而我认为这么一个小工具，Makefile足够了。
+于是还有一个Makefile版本用于自用(我又土了么)。
 
 ###其他实现
 你也有写这东西吗？（话外音，有人没写过么）
