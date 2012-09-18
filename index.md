@@ -39,14 +39,14 @@ tagline:
 
 
   <div class="span3">
-<h2>Categories </h2>
+<h2>^_^ </h2>
 <ul class="tag_box inline">
     {% assign categories_list = site.categories %}
     {% include JB/categories_list %}
 </ul>
 <br />
 
-<h2>Tags</h2>
+<h2>>_< </h2>
 <ul class="tag_box inline">
   {% assign tags_list = site.tags %}  
   {% include JB/tags_list %}
@@ -71,7 +71,7 @@ tagline:
 *   通关阿玛拉王国：惩罚
 *   蛋疼时，美化一下博客 
 -->
-<h2>Friends</h2>
+<h2>@_@</h2>
 <ul class="tag_box inline friends ">
 <li><a href="http://www.startfeel.com">FU体验馆</a></li>
 <li><a href="http://www.son1c.cn" title="一个朋友的小站。">Son1c.cn</a></li>
