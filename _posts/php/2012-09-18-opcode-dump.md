@@ -42,6 +42,19 @@ code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type
 
 https://github.com/zhanger/opcodesdumper
 
+###其他实现
+你也有写这东西吗？（话外音，有人没写过么）
+
+####VLD  
+git://github.com/derickr/vld.git
+
+
+####网页在线版的opcode dumper : 
+http://supercompiler.com/app/opcode_dumper     
+
+github:https://github.com/ericzhang-cn/opdumper
+
+
 ###TODO 
 <!--
 目前处理函数的查找还要依赖外部的文本文件 opcodes_handlers_php5_310 , 需要添加其他版本的处理函数文本，
