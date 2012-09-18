@@ -3,7 +3,7 @@ categories: php
 tags: internal 
 layout: post
 date: 2012-09-17 21:02:49 +08:00
-title: "自动查找opcodes的处理函数"
+title: "得到PHP脚本opcodes及其处理函数的小工具"
 
 ---
 {% include JB/setup %}
