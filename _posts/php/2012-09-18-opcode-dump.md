@@ -8,7 +8,7 @@ title: "自动查找opcodes的处理函数"
 ---
 {% include JB/setup %}
 
-#打印出opcode的处理函数
+###打印出opcode的处理函数
 
 一年前写了[由opcodes找到其处理函数的方法](http://zhangabc.com/2011/08/27/find-opcodes-to-implements/), 然后很长一段时间之内，
 都使用vld输出opcodes，再去人肉寻找其处理函数。
@@ -26,7 +26,7 @@ title: "自动查找opcodes的处理函数"
 实现原理，使用opcode -> opcode_handler的转化公式进行转化，(只支持CALL的分发方式):
 
 {% highlight c %}
-    code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type];
+code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type];
 {% endhighlight  %}
 
 看了前面的 [由opcodes找到其处理函数的方法](http://zhangabc.com/2011/08/27/find-opcodes-to-implements/), 比较容易就能在zend_init_opcodes_handlers数组中遍历到需要导出的函数名。
@@ -35,14 +35,14 @@ title: "自动查找opcodes的处理函数"
 升级后已经push request到鸟哥的github: https://github.com/laruence/opcodesdumper
 
 
-#关于构建
+###关于构建
 
 鸟哥使用比较“高级”的autotools来自动构建，不过我认为这么一个小工具，Makefile足够了。
 于是还有一个Makefile版本：
 
 https://github.com/zhanger/opcodesdumper
 
-#TODO 
+###TODO 
 <!--
 目前处理函数的查找还要依赖外部的文本文件 opcodes_handlers_php5_310 , 需要添加其他版本的处理函数文本，
 同时，代码要实现对PHP版本的自动检测 
