@@ -1,3 +1,6 @@
+
+# 别看了，这是个无聊的个人博客 。。。
+
 # Jekyll-Bootstrap
 
 The quickest way to start and publish your Jekyll powered blog. 100% compatible with GitHub pages
