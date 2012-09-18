@@ -23,11 +23,13 @@ title: "自动查找opcodes的处理函数"
 ![小截图](http://ww3.sinaimg.cn/large/a74ecc4cjw1dwzbmmlzi9j.jpg)
 
 
-实现原理，使用opcode -> opcode_handler的转化公式进行转化，(只支持CALL的分发方式)
-```
-code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type];
-```
-看了前面的 [由opcodes找到其处理函数的方法](http://zhangabc.com/2011/08/27/find-opcodes-to-implements/), 比较容易就能在handler数组中遍历到需要导出的函数名。
+实现原理，使用opcode -> opcode_handler的转化公式进行转化，(只支持CALL的分发方式):
+
+{% highlight c %}
+    code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type];
+{% endhighlight  %}
+
+看了前面的 [由opcodes找到其处理函数的方法](http://zhangabc.com/2011/08/27/find-opcodes-to-implements/), 比较容易就能在zend_init_opcodes_handlers数组中遍历到需要导出的函数名。
 
 
 升级后已经push request到鸟哥的github: https://github.com/laruence/opcodesdumper
