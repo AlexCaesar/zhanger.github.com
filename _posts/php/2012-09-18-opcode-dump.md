@@ -34,10 +34,9 @@ code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type
 
 ###关于源码构建
 
-{% highlight c %}
-源码地址：       https://github.com/laruence/opcodesdumper
-Makefile版源码： https://github.com/zhanger/opcodesdumper
-{% endhighlight  %}
+源码地址:    [https://github.com/laruence/opcodesdumper](https://github.com/laruence/opcodesdumper
+
+Makefile版源码： [https://github.com/zhanger/opcodesdumper]( https://github.com/zhanger/opcodesdumper)
 
 由于鸟哥使用比较“高级”的autotools来自动构建，而我认为这么一个小工具，Makefile足够了。
 于是还有一个Makefile版本用于自用(我又土了么)。
