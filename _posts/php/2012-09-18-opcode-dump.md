@@ -38,7 +38,7 @@ code * 25 + zend_vm_decode[op->op1.op_type] * 5 + zend_vm_decode[op->op2.op_type
 ###关于构建
 
 鸟哥使用比较“高级”的autotools来自动构建，不过我认为这么一个小工具，Makefile足够了。
-于是还有一个Makefile版本：
+于是还有一个Makefile版本用于自用：
 
 https://github.com/zhanger/opcodesdumper
 
