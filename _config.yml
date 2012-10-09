@@ -6,7 +6,7 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 auto: true
 #markdown: maruku
 markdown: rdiscount
-pygments: true
+pygments: false
 
 
 # Themes are encouraged to use these universal variables 
@@ -77,22 +77,13 @@ JB :
   categories_path : /categories.html
   tags_path : /tags.html
 
-  # Settings for comments helper
-  # Set 'provider' to the comment provider you want to use.
-  # Set 'provider' to false to turn commenting off globally.
-  #
   comments :
-    provider : disqus
+    provider : disqus # Set 'provider' to false to turn commenting off globally.
     disqus :
       short_name : tonysbloger
 
-   
-  # Settings for analytics helper
-  # Set 'provider' to the analytics provider you want to use.
-  # Set 'provider' to false to turn analytics off globally.
-  #        
   analytics :
-    provider : google 
+    provider : google # Set 'provider' to false to turn analytics off globally.
     google : 
         tracking_id : 'UA-30447284-1'
 

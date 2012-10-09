@@ -1,10 +1,11 @@
---- 
+---
+layout: post
+title: "由opcodes找到其处理函数的方法"
 categories: php
 tags: internal 
-layout: post
 date: 2011-08-28 3:02:49 +08:00
-title: "由opcodes找到其处理函数的方法"
-
+published: true
+summary: opcode to handler
 ---
 {% include JB/setup %}
 ##Debug法：

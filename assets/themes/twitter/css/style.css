@@ -14,6 +14,7 @@ html, body {
   text-align: center; /* center align it with the container */
 }
 
+
 /* The white background content wrapper */
 .content {
   background-color: #fff;
@@ -29,7 +30,8 @@ html, body {
 
 /* Page header tweaks */
 .page-header {
-  background-color: #f5f5f5;
+  background-color: #FAEFD4;
+  /* background-color: #f5f5f5; old color, modify by T0ny*/
   padding: 20px 20px 10px;
   margin: -20px -20px 20px;
 }
