@@ -41,16 +41,13 @@ tagline:
   <div class="span3">
 <h2>^_^ </h2>
 <ul class="tag_box inline">
-    {% assign categories_list = site.categories %}
-    {% include JB/categories_list %}
+{% assign categories_list = site.categories %}
+{% include JB/categories_list %}
+{% assign tags_list = site.tags %}  
+{% include JB/tags_list %}
 </ul>
 <br />
 
-<h2>>_< </h2>
-<ul class="tag_box inline">
-  {% assign tags_list = site.tags %}  
-  {% include JB/tags_list %}
-</ul>
 
 <br />
 <h2>O_O</h2>
