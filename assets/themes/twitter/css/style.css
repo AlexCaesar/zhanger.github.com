@@ -3,6 +3,8 @@ html, body {
   background-color: #eee;
   color: black;
   font: 14px Helvetica,arial,freesans,clean,sans-serif;
+  line-height: 16pt ;
+  text-indent:2em;
 }
 .navbar {
   margin-bottom: 0;
