@@ -36,6 +36,7 @@ tagline:
 *   通关阿玛拉王国：惩罚
 *   蛋疼时，美化一下博客 
 -->
+    <div class="span12">
 <hr />
 <ul class="tag_box inline friends ">
 <li><a href="http://www.startfeel.com">FU体验馆</a></li>
@@ -49,4 +50,5 @@ tagline:
 <li><a href="http://blog.eddie.com.tw/" title="爱玩又爱现的家伙，哈哈。">高見龍</a></li>
 <li><a href="http://www.jack-y.com" title="帅锅。">Jack-Y</a></li>
 </ul>
+    </div>
 </div>
