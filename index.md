@@ -22,7 +22,8 @@ tagline:
     </ul>
     </div>
     <div>
-    <image src="http://ww4.sinaimg.cn/large/a74ecc4cjw1e05d4sct2uj.jpg" />
+    <!-- <image src="http://ww4.sinaimg.cn/large/a74ecc4cjw1e05d4sct2uj.jpg" /> -->
+    <image src="http://h.hiphotos.baidu.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=d894f3fd8a82b90139adc33643b6d84a/1f178a82b9014a90e16b9e67a9773912b21bee97.jpg?referer=06b744068a1363274cfaf6034a8d&x=.jpg" /> 
     </div>
     <br />
 <!--
