@@ -5,8 +5,7 @@ wordpress_id: 285
 layout: post
 wordpress_url: http://www.zhangabc.com/?p=285
 date: 2010-11-15 11:21:11 +08:00
-title: !binary |
-  UEhQ5omp5bGV5Lit6Ieq5a6a5LmJ5Ye95pWw6L+U5Zue5YC85LiOWlZBTA==
+title: PHP扩展中自定义函数返回值与ZVAL
 
 ---
 如要在PHP扩展中返回一个整数，那是相当的容易滴：<!--more-->
