@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Er.z]]></title>
+  <link href="http://www.zhangabc.com/atom.xml" rel="self"/>
+  <link href="http://www.zhangabc.com/"/>
+  <updated>2013-08-04T05:03:52+08:00</updated>
+  <id>http://www.zhangabc.com/</id>
+  <author>
+    <name><![CDATA[Er.Z]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Autolayout in iOS]]></title>
+    <link href="http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios/"/>
+    <updated>2013-08-03T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios</id>
+    <content type="html"><![CDATA[<h2>Autolayout的优势</h2>
+
+<p>在autolayout之前，一般会使用frame来定位视图中的元素。</p>
+
+<blockquote><p>frame是决定视图位置与宽高的属性，其值为CGRect对象, 可以用下面的方法来定义。
+CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
+
+<p>CGRect对象定义中的四个参数为 横坐标、纵坐标、宽、高。
+把CGRect对象赋值并设置到UIView的frame属性，就可以实现视图的大小及位置的定义。
+理论上这种方法是可以解决所有的问题，不过在实际操作中，有两种情况使用frame是非常不方便的：</p>
+
+<ol>
+<li>设备翻转需要视图位置做出相应的调整；</li>
+<li>可能发生内部元素位置变化的复用视图，如下图中的tableViewCell</li>
+</ol>
+
+
+<p><img src="http://farm6.staticflickr.com/5347/9431737148_10e116c3bf_o.png" alt="列表" /></p>
+
+<p>上面这两种情形出现时，一般要写大量的定位计算代码，而且升级比较麻烦，于是出现了Autolayout来改善frame计算工作过繁重的问题；</p>
+
+<h2>Autolayout原理</h2>
+
+<p><img src="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Art/windowlayers.jpg" alt="UIView" />
+【图片来自developer.apple.com】</p>
+
+<p>iOS的视图是用tree来组织的，每个视图都有其父视图，根节点为Window对象。
+这样就可以把相对关系划分在一定范围内，同时使用父子、兄弟的关系来组织视图。</p>
+
+<h2>使用Autolayout</h2>
+
+<p>Autolayout的使用是比较方便的，主要是生成NSLayoutConstraint对象，然后把constraint加到父视图就可以了。</p>
+
+<h3>例一</h3>
+
+<p><img src="http://farm6.staticflickr.com/5444/9429251493_8a9958c5b1_o.png" alt="demo1" /></p>
+
+<p>当设备进行翻转时，方块的位置和大小随之发生了变化，而这种变化，如果使用frame来进行计算的话，相对比较麻烦；而使用autolayout,代码要简单一些：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>UIView * A = [[UIView alloc] init];
+</span><span class='line'>    UIView * B = [[UIView alloc] init];
+</span><span class='line'>    A.translatesAutoresizingMaskIntoConstraints = NO;
+</span><span class='line'>    B.translatesAutoresizingMaskIntoConstraints = NO;
+</span><span class='line'>    A.backgroundColor =[UIColor purpleColor];
+</span><span class='line'>    B.backgroundColor =[UIColor orangeColor];
+</span><span class='line'>    [self.view addSubview:A];
+</span><span class='line'>    [self.view addSubview:B];
+</span><span class='line'>    
+</span><span class='line'>    UIView * rootView = self.view;
+</span><span class='line'>    
+</span><span class='line'>    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(A, B, rootView);
+</span><span class='line'>    NSArray *verticalConstraints   = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[A(80)]-10-[B(80)]"
+</span><span class='line'>                                                                             options:0 metrics:nil
+</span><span class='line'>                                                                               views:viewsDictionary];
+</span><span class='line'>    NSArray *horizontalAConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[A]-10-|"
+</span><span class='line'>                                                                             options:0
+</span><span class='line'>                                                                             metrics:nil
+</span><span class='line'>                                                                               views:viewsDictionary];
+</span><span class='line'>    NSArray *horizontalBConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[B]-10-|"
+</span><span class='line'>                                                                             options:0
+</span><span class='line'>                                                                             metrics:nil
+</span><span class='line'>                                                                               views:viewsDictionary];
+</span><span class='line'>    
+</span><span class='line'>    [self.view addConstraints:verticalConstraints];
+</span><span class='line'>    [self.view addConstraints:horizontalAConstraints];
+</span><span class='line'>    [self.view addConstraints:horizontalBConstraints];</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>to be continue…</h1>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[心中的猛虎--记Life of PI]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/12/03/lifeofpi/"/>
+    <updated>2012-12-03T12:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/12/03/lifeofpi</id>
+    <content type="html"><![CDATA[<p>传说人生是一个不断自问“什么是人生”的过程，在不同的年龄、经历、环境、甚至因为遇到不同的人或者天气，会有完全不同的答案。
+于是，有人说关于人生的讨论都是屁话。
+就不断变老的自己而言，少年时曾在书中苦苦寻找必须不断学习和认知这个世界是否必要的终极答案，也悲剧的发现，有些事情，你一旦知道了，便完全无法忘却，从此你便成了另外一个人。
+所以，本文以下内容可以算做是《青年ER的奇幻飘流》，用来纪念曾经的感觉。</p>
+
+<p>接触李安的电影，最早是看《卧虎藏龙》, 很美，可能因为那时是奔着武侠去的，没感觉有多么精彩，没徐老怪的电影好看。看两遍只记住了一句台词：你握紧拳头，里面什么都没有，而摊开手掌，你便拥有了全世界。
+个人理解为：做技术，要有一个open的心态，不能非黑就是白，越做越狭窄。
+后来看《剑雨》，感觉就好看程度而言，《剑雨》比《卧虎藏龙》好看多了，有悬念，有伏笔，有武侠，有情感。再后来看《色戒》, 也没感觉惊奇，因为事实本来就是那样，爱国女学生爱上了汉奸，抵达女人心的捷径早就听说过，但捷径不是最优也是事实。
+朝伟叔的演技，大家伙儿说好，但我眼里只有故事。
+《life of PI》的第一印象是非常美丽，美的让人联系起生命中最幸福的时刻，大多都是第一次做某些事情，新奇，而又乐在其中。
+如果没有这部电影，可能今生我永远看不到夜光水母成群的深夜大海，甚至做梦都梦不到。</p>
+
+<p>美丽过后，《PI》 是一部让人挺惊奇的。
+潜意识一般把电影浅薄的分成两种：一种艺术或者垃圾，另一种是消遣。《PI》是前者，而那个XX，那个OO，还有那些个XXOO们都是后者。
+就完全不懂艺术的我而言，区分艺术和消遣的标准是一种程序员式的偏执思维，一部电影，如果让我愉悦而忘却，再看一遍就是嚼蜡，为后者; 否则，就是艺术或者垃圾;
+艺术或者垃圾都不能多看，过于沉湎或者进化为白痴都不是我想要的，我更喜欢看消遣的电影，如最近两个老男人出演的西装片就不错。
+或者电影本身不应该分类型的？</p>
+
+<p>做为一只标准码农，我爱看的，从来都不是文艺电影，我爱看《PI》，但应该不会看第二遍，太残忍。
+《PI》拍的让人感觉挺艺术，猛虎、飞鱼、大鲸、变色的“神鱼”、各种大海、救命的食人岛……，相信有一点经历的人，事后都会为它们代入不同的现实，然后被感动。
+特别是猛虎，出镜率最高，也最为矛盾。
+在整个的奇幻经历中，总觉得少年在情感上有点奇怪，不杀虎的选择让人最为不解，因为如果是我，杀虎是第一顺位的选择，杀了虎，人也不会无聊死，干嘛自己找罪受。
+一开始，我把少年的“养虎为患”理解为一种人性的抗争，后来，才发现虎与人，实为一体。
+这个“一体”的概念，从一开始就是李安的把戏，李安一再暗示观众，人虎一体，但不说为什么，直到最后，少年流着泪道出了奇幻旅行的残酷版。</p>
+
+<p>猛虎的故事是真的吗？我宁愿它是真的，太残酷。
+或者艺术本身跟程序完全不同，不是字里行间仿若01的是否，而更像是内心的犹豫和彷徨。
+答案也许像李导说的一样不重要，如我们已经剩下最后一口气，在床上使劲的喘不过气来，还在想：前两天随的份子钱随少了，别人500，我只随了400，真不应该。
+世间有的事情，你感觉是真的，就千真万确，不容怀疑;
+一旦有了怀疑，事物就会化为虚伪。
+所以执政党从来就不曾害怕过外敌和战争，而更担心来自内部的怀疑，“攘外必先安内”，从历史上看，蒋公没错，的确是执行的不好。</p>
+
+<p>我更愿意被李安的故事带着问自己第二个问题：猛虎是什么？ 影片里的猛虎，第一层是内心的兽性，是残酷的，是可怕的，是获救后要抛弃的，是不容于信仰，不容于现实的。
+但再深入一层：是猛虎，让我们活了下来，而在现实的世界里，是猛虎，让富一代成为了富一代，让富一代的后人成为了富二代，不是么？
+当我们想拥有别人不曾拥有的，想得到别人未曾得到的，而去争取，去奋斗，去拼搏，…，猛虎便在我们的眼神里，在我们的话语中，在我们的心里。
+我喜欢猛虎，美丽的花纹，犀利的眼神，卖萌时激萌，凶猛时要人的命。</p>
+
+<p>所有关于选择的命题，都是量的问题，从人的角度去看，没有质变，只有量变。质变是人为加上去的概念，而量变才是事物的本质。
+如果杀一个人，是杀人犯; 杀100个人，是杀人狂; 杀10000人，是杀人王; 杀100000人，是虎将; 杀1000000人，是军事家，是领袖，是民族英雄，运气好的话，在某些国家，死后灵位可以进神庙，或者尸体不朽。
+心中的猛虎越强壮，内心也就越强大，这一个好玩的博奕过程，虎不能死，人也不可以被虎反噬。被虎反噬的结果，必然是失去平衡，被社会里的其他人“除暴安良”。</p>
+
+<p>电影里，PI讲了漂流的两个版本：奇幻版和现实版。不过，PI只讲了一个故事。</p>
+
+<p>最后，友情提示：如果一定要出海，一部可以待机10几天的三防手机，很有必要。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[时间管理]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/11/13/time-management/"/>
+    <updated>2012-11-13T23:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/11/13/time-management</id>
+    <content type="html"><![CDATA[<p>今天参加了公司的一个培训，关于时间管理的，总结备忘：</p>
+
+<h3>什么是时间管理</h3>
+
+<p>时间管理，并不是管理时间，而是管理自己，时间本身是无法管理的，人们可以控制的，只是在相同的时间中做什么事情。
+所以说，时间管理本身，是一系列的选择。</p>
+
+<h3>时间管理的前提</h3>
+
+<p>时间管理的前提是明确目标，想拥有生命中从未有过的东西，才需要去做从未做过事情。
+明确的目标才是时间管理的动力。</p>
+
+<h3>时间管理的方法</h3>
+
+<p>把事件分类，放入“时间管理四象限图”中，然后从左到右，从上到下的顺序去做：</p>
+
+<p><img src="http://pemsys.duapp.com/time-manage.png" alt="时间管理四象限图" /></p>
+
+<p>如上图，值得注意的是，事件不是静止的，而是会在上面的四个象限中来回“浮动”。
+如何去区分事件属于哪个象限，每个人有自己的价值观。本质上，事情的重要性是由是否将自身目标实现可能性提高为基准来确定的。</p>
+
+<p>第2象限是非常值得注意的具有“非凡的效能”的象限，需要长期的努力的坚持。如：健身 、 做计划。
+第2象限的事情是必须去做的，一点点积累的。我们应该尽可能活在第2象限，做一个高效的人。</p>
+
+<p>第1象限一般会是第2象限的事情没有做好，事情就跑到第1象限去了。</p>
+
+<p>第4象限是生命的浪费，对于一个想奋斗的人来说，可能是长时间的游戏，长时间的看电视等。</p>
+
+<p>有一个特殊的事情，就是休闲活动，处于奋斗中的同学一般不容易区分什么是休息，什么是浪费生命。那么，如何判断一件事情是休闲活动还是对生命的浪费呢？
+如果这个事情在进行时，你可以随时站起来去喝一杯水而不感觉被打断，同时不会精神高度紧张，整个人处于放松状态，这个事情就是休闲；
+否则，这个事情不是休闲活动,而是不良爱好之类的。</p>
+
+<h3>时间管理的工具</h3>
+
+<p>在douban.com搜索一下“时间管理”，里面众多小组中的牛人们用了非常多的方法，总是适合自己的。
+不过个人认为，当真的发现时间管理的必要的时候，无论使用什么工具，效果都会不错, 把时间浪费在工具的学习上，是比较不明智的。</p>
+
+<p>如果过于迷信GTD工具，会把自己变成机器人吧&amp;……</p>
+
+<h3>最重要的事情</h3>
+
+<p>行动。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[得到PHP脚本opcodes及其处理函数的小工具]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/09/17/opcode-dump/"/>
+    <updated>2012-09-17T21:02:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/09/17/opcode-dump</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<h3>打印出opcode的处理函数</h3>
+
+<p>一年前写了<a href="http://zhangabc.com/2011/08/27/find-opcodes-to-implements/">由opcodes找到其处理函数的方法</a>, 然后很长一段时间之内，
+都使用vld输出opcodes，再去人肉寻找其处理函数。</p>
+
+<p>后来，发现对于opcodes, 很多人都实现了输出，但对于opcode的处理函数，则没有关注;</p>
+
+<p>而我们在分析PHP脚本代码到opcodes，再到具体的C实现的过程，opcode的处理是比较重要的一个环节；</p>
+
+<p>于是升级了鸟哥的opcode dumper，对opcode handler进行了输出：</p>
+
+<p>如图：
+<img src="http://ww3.sinaimg.cn/large/a74ecc4cjw1dwzbmmlzi9j.jpg" alt="小截图" /></p>
+
+<p>实现原理，使用opcode -> opcode_handler的转化公式进行转化，(只支持CALL的分发方式):</p>
+
+<div>
+  <pre><code class='c'>code * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5 + zend_vm_decode[op-&gt;op2.op_type];</code></pre>
+</div>
+
+
+<p>看了前面的 <a href="http://zhangabc.com/2011/08/27/find-opcodes-to-implements/">由opcodes找到其处理函数的方法</a>, 比较容易就能在zend_init_opcodes_handlers数组中遍历到需要导出的函数名。</p>
+
+<h3>关于源码构建</h3>
+
+<p>源码地址:    <a href="https://github.com/laruence/opcodesdumper">https://github.com/laruence/opcodesdumper</a></p>
+
+<p>Makefile版源码： <a href="https://github.com/zhanger/opcodesdumper">https://github.com/zhanger/opcodesdumper</a></p>
+
+<p>由于鸟哥使用比较“高级”的autotools来自动构建，而我认为这么一个小工具，Makefile足够了。
+于是还有一个Makefile版本用于自用(我又土了么)。</p>
+
+<h3>其他实现</h3>
+
+<p>你也有写这东西吗？（话外音，有人没写过么）</p>
+
+<h4>VLD</h4>
+
+<p>git://github.com/derickr/vld.git</p>
+
+<h4>网页在线版的opcode dumper :</h4>
+
+<p>http://supercompiler.com/app/opcode_dumper</p>
+
+<p>github:https://github.com/ericzhang-cn/opdumper</p>
+
+<h3>TODO</h3>
+
+<!--
+目前处理函数的查找还要依赖外部的文本文件 opcodes_handlers_php5_310 , 需要添加其他版本的处理函数文本，
+同时，代码要实现对PHP版本的自动检测 
+-->
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[跳出功G夫F网W的方法]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/08/31/go-agent/"/>
+    <updated>2012-08-31T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/08/31/go-agent</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<p>YAML的格式导致jekyll未名的出错，花了几个小时的时间。  <br/>
+测试文章发布，记录一下技术宅记录跳出功G夫F网W的方法:</p>
+
+<h3>第一步，创建GAE应用，得到appid</h3>
+
+<p>去gae 申请个帐号，创建个应用，这样就有appid了。</p>
+
+<h3>第二步，开始部署goagent：</h3>
+
+<p>打开shell , 执行下列命令，会让你输入appid \ google 邮箱 、密码</p>
+
+<div>
+  <pre><code class='bash'>$ wget https://nodeload.github.com/goagent/goagent/zipball/2.0 -O goagent.zip
+   $ unzip goagent.zip -d goagent
+   $ python goagent/server/uploader.zip 
+   $ python goagent/local/proxy.py</code></pre>
+</div>
+
+
+<h3>第三步 使用</h3>
+
+<h4>chrome</h4>
+
+<pre><code>* wget http://goagent.googlecode.com/files/SwitchyOptions.bak
+* 安装SwitchySharp插件后导入上面下载的SwitchyOptions.bak配置即可；
+* 需要在本机安装证书以防不测：goagent/local/CA.crt；
+</code></pre>
+
+<h4>firefox同理</h4>
+
+<h4>IE或者windows下的话。。。</h4>
+
+<h3>Q &amp; A</h3>
+
+<pre><code>官方网站： http://code.google.com/p/goagent/
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[暴雪的迪亚不罗三]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/07/30/diablo-3/"/>
+    <updated>2012-07-30T23:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/07/30/diablo-3</id>
+    <content type="html"><![CDATA[<p>能在5秒内就让人全身心投入的事情，游戏绝对算得上其中一个。不过我以前总是下载10几G的游戏，安装，看过场动画，再删掉。可能很多游戏用心玩就会有乐趣，但能给自己一个理由，说服自己舍得付出时间成本，本身也是一件非常不容易的事情。</p>
+
+<h3>蛋疼的开始</h3>
+
+<p>其实我不是一个暗黑迷，甚至感觉暗黑2没有极品飞车好玩，因为暗黑2我没怎么玩，游戏时间几年里断断续续加一起有6小时就不错了。
+暗黑3要发售的消息并没给我的生活造成多少波澜。不过由于一起同居了很多年的好基友的存在，我第一时间加入到暗黑3的试玩以及后来的无限MF之中。</p>
+
+<h3>普通难度</h3>
+
+<p>暗黑3的开始，就是从普通难度开始。所谓的普通难度，基本上没有什么难度，这个阶段最开心的事情有两个，
+一是升了级之后，解锁的新的有趣的技能；
+二是看到牛逼的剧情和给力的过场动画（可惜，剧情略苍白，溶入感不强）。
+个人认为这是最好玩的一个难度，可惜10小时就通关了，没到30级就过了这个难度。</p>
+
+<h3>恶梦难度</h3>
+
+<p>本来以为恶梦难度要有些不同，结果是与普通难度完全一样，只是怪物厉害了一点，这个阶段，乐趣就只剩下搭配解锁不同的技能了。</p>
+
+<h3>地狱难度</h3>
+
+<p>人物极别越来越不好升了，但也就是那样，没啥不同，因为有基友的存在，飞快的就过了地狱，直接去炼狱了。
+这个阶段无聊的很，因为要升级去地狱，不停的去玩同一个小关卡（因为经验值最多）。
+”铁狼佣兵团~把政权夺回来~~“，无脑的对白成为了一个永远的回忆，喵了个咪的，至少听了100次。
+第二个人物的练级过程完全是酷刑，还好有一个DH的好基友，几天晚上连续刷战场，把我带到60级。</p>
+
+<h3>炼狱难度</h3>
+
+<p>这是最后的难度了，暴雪在这个难度的设计让人感觉是权衡了太多的商业的和利益的因素，游戏的乐趣主要在于打装备（术语叫：MF）。
+而为了更多在现金拍卖行里提取高达15%的手续旨，暴雪设计了极低的暴率，来延长游戏的时间。。。
+甚至还在四大章节的难度上不停的下手脚，难度调来调去，总之目的就是让大多数玩家有事儿干，怪厉害了，大家打不动了，好装备才值钱，暴雪才有增值税。</p>
+
+<h3>我的进度</h3>
+
+<p>有两个满级的人物，玩了200小时，打翻了炼狱大菠萝，我的武僧终于万防千抗了，巫医虽然也满级了，但完全是个小号。
+炼狱也就是第一二章自由玩耍，当然要是有个高DPS的基友，武僧角色也完成可以去A3-A4蹭装备。</p>
+
+<h3>最终感受</h3>
+
+<p>暗黑3是一款值的一玩的游戏，尽管在近两个月里几乎全部的业余时间都拿了出来，还是感觉可以一战。
+不过，个人感觉如果跟暴雪认真咱就输了，差点成为那种想把暗黑3里所有的怪物都完美的随意虐待才能得到最牛逼的成就感的终极玩家，
+可能暴雪需要玩家的游戏时间达到2-3年，才能收回成本吧。
+单就游戏性而言，RPG的确没有对抗类的游戏寿命更长，如DOTA（我不会），如星际2（水平只能杀电脑）。星际2 感觉偶尔打一局电脑还是很爽的，不过因为游戏是公平的，除了序列号的钱，暴雪收益并不高。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[目前Mac下最快的输入法]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/05/13/mac-best-input-method/"/>
+    <updated>2012-05-13T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/05/13/mac-best-input-method</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<h2>背景</h2>
+
+<p>先先后后使用过 QQ、搜狗、&#8230;. wbim 各种输入法，先罗列一下这些输入法的不爽之处：</p>
+
+<ol>
+<li>每种输入法安装之后要注销系统~ ，安装输入法需要注销登录，中止正在进行的其他工作；</li>
+<li>切换时有延迟，尽管我使用的是SSD，总还是能感觉到一点小延迟，不过现在的输入法好很多；</li>
+<li>&#8230;</li>
+</ol>
+
+
+<h2>主角出场： 鼠鬚管</h2>
+
+<h3>优点：</h3>
+
+<p>迅速，非常迅速，安装不用注销系统，切换<strong>不哆嗦</strong>;</p>
+
+<h3>缺点：</h3>
+
+<p>配置需要自己改配置文件。。。e&#8230;如果你用过vim的话，相信这个配置文件对你来说非常简单，但女王一般是很难理解的。</p>
+
+<p>对了，这个输入法是跨平台的，但三个平台是三种不同的程序和名字：</p>
+
+<pre><code>Linux ： 中州韻 | ibus-rime 
+MAC： 鼠鬚管 | Squirrel 
+Windows： 小狼毫 | Weasel 
+</code></pre>
+
+<p>三种平台，因为程序代码完全不同 ， 所以配置也不太一样，这个需要注意下。而且这货是开源的，大家可以自行YY，哦哦</p>
+
+<p>最后是项目地址：</p>
+
+<p> <a href="http://code.google.com/p/rimeime/" title="^o^">http://code.google.com/p/rimeime</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[再见，WordPres哥]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/04/27/goodbye-wordpress/"/>
+    <updated>2012-04-27T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/04/27/goodbye-wordpress</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<p>世间总有美好的事物渐渐变质，或许，它们没变，我们变了。</p>
+
+<p><img src="http://pemsys.duapp.com/blog/blog_goodbye_wp.png" alt="n_n" /></p>
+
+<p>终于决定离开WordPress, 原因也无非是插件玩不起，没插件又不好玩。使劲儿试了一下搬家，发现因为曾经使用过各种代码高亮的插件以及HTML编辑器的插件，导致各种文章内容格式严重有问题，虽然导出成文本很简单，但想统一使用脚本自动整理，基本上已经是不可能的事情了。于是， 索性把旧文扔在哪里，心情好时就整理一篇过来。。。相信终究都会归于一处，时间无所谓。</p>
+
+<p>最主要的离开WrodPress的原因是它越来越重了，而且离一个博客的核心功能写日志也越来越远。。。好如我想看场电影，到了电影院，发现椅子已经换真皮的了，爆米花已经免费，甚至赠送美女相陪一起看，但屏幕还是10米长、10米宽的小屏幕，我当然不愿意到这样子的电影院里去。</p>
+
+<p>这个时候，Markdown出现了，原意是想重复发明轮子，写一个PHP扩展版的markdown解释扩展，结局当然是成了一坑。最后偶然看到github Pages ，于是搬～</p>
+
+<p>搬的过程当真是曲曲折折， 长达4个月， 每次有想法，都退缩了，不想再把时间放到折腾博客上，直到我在网上遇到一个跟我一样爱玩又爱现的家伙。。。在他的感染下，我动摇了，那天我凌晨3点睡的。。。。。。</p>
+
+<p>最终的结局是，我的博客又有新家了，我决定先挖些坑，甚至写一点小说（YY？穿越？～～好吧）</p>
+
+<p>无论如何，我还活着， 二并欢乐着， 谢谢。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Phonegap超级浅尝]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/02/28/phonegap-test/"/>
+    <updated>2012-02-28T01:50:50+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/02/28/phonegap-test</id>
+    <content type="html"><![CDATA[<p>前阵子听 <a href="http://www.startfeel.com/">@leiyi同学</a> 聊到可以用PhoneGap来搞移动应用，回家做了功课，发现这货相当强大，可以使用HTML+JS+CSS来写出适用于ios/andorid/&#8230;等等平台的应用，正如它网站的宣传图：</p>
+
+<p><img src="http://pemsys.duapp.com/blog/phonegap-test.png" alt="官方广告^_^" /></p>
+
+<p>然后我决定试用一下，费了18牛72虎之力终于下好了种种SDK（唉，家里的网速跟公司真是天上地下）… 最后小试了一把“Hello World”。</p>
+
+<p>实现相当简单，跟着官方的 <a href="http://phonegap.com/start">Get Started Guide</a> 基本上完全不用太用力就可以在模拟器中完成。顺手记一句解决中文乱码问题…跟普通网页一样，文件编码与声明一致就OK。</p>
+
+<p>接着去看phonGap的官方API，看了一些特效以及功能的实现，记几个想法：</p>
+
+<ul>
+<li><p>跨平台很帅，基本上真的做到了为一个平台编写应用，代码基本不更改的情况下搬到其他平台去。而代价就是显示效果和功能的削弱，ios可以做到1、3、5、7 ， android可以做到2、3、4、5 ， 那么phoneGap就只能做到3、5 ;</p></li>
+<li><p>可以用js来控制界面元素，添加事件，调用资源; 相信这点一定吸引了很多人，不过，其实用java 也是一样，其实学习一种新的语法可能并不困难，而且有时新手开跑车，还真不一定就慢过职业自行车手，所以感觉与其用C基础上的JAVA中虚拟出来的JS环境来做这些事情，还真不如脱去一层，直接用JAVA语法来搞;</p></li>
+<li><p>用CSS来进行界面布局很爽，不得不说，这个爽是来自于学习成本的降低，原生的布局方式是需要学习和理解的，其实花点时间学习和理解一下之后，同样可以搞掂，很可能还而且会更好，原因同上;</p></li>
+</ul>
+
+
+<p>最后，如果只是写一个信息类的，或者展示类的东东，又灰常熟悉js/css, 完全对java无爱，phoneGap 绝对是一把利器; 但如果你写的东西，对原生动画有比较大的需求，而且对原生环境比较有爱,那还是用object-C写ios吧。。。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[PHP扩展]获取$_SERVER变量的问题及解决]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals/"/>
+    <updated>2011-08-28T03:02:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<h2>背景</h2>
+
+<p>本文适用于希望在PHP扩展中获取到 $<em>SERVER/$</em>POST/$<em>GET/$</em>REQUEST/..的情形。</p>
+
+<h2>经过</h2>
+
+<p>想在PHP扩展中获取$_SERVER[&#8216;SCRIPT_FILENAME&#8217;]，于是有如下代码：</p>
+
+<div>
+  <pre><code class='c'>PHP_FUNCTION(xx_get_path)
+    {   
+        HashTable *_SERVER;
+        zval **stuff;
+        char *path_info;
+
+        _SERVER = Z_ARRVAL_P(PG(http_globals)[TRACK_VARS_SERVER]);
+         if (SUCCESS == zend_hash_find(_SERVER, 
+             &quot;SCRIPT_FILENAME&quot;, sizeof(&quot;SCRIPT_FILENAME&quot;), 
+              (void **) &amp;stuff)) {
+             path_info = Z_STRVAL_PP(stuff);
+             RETVAL_STRING(path_info, 1); 
+         }   
+
+    }</code></pre>
+</div>
+
+
+<h2>出现问题</h2>
+
+<p>在PHP中我这样使用这样的代码来调用：</p>
+
+<div>
+  <pre><code class='php'>&lt;?php 
+    echo xx_get_path();
+    ?&gt;</code></pre>
+</div>
+
+
+<p>结果 ：在浏览器中访问时，Apache报：child pid 52540 exit signal Segmentation fault (11)
+在cli中，直接php index.php是正常的。
+而且，如果改成这样子，浏览器中也正常了。</p>
+
+<div>
+  <pre><code class='php'>&lt;?php 
+    $_SERVER;   //这可也可以放到最后; 
+    echo xx_get_path();
+    ?&gt;</code></pre>
+</div>
+
+
+<h2>分析</h2>
+
+<p>这里最让人费解就是在PHP代码中放一个$<em>SERVER; 就好了，很显然是这变量发生了什么 。。。。
+没错，就是它，经过TIPI讨论组数秒的讨论，找到了这个：
+http://www.php.net/manual/en/ini.core.php#ini.register-globals
+原来</em>SERVER系列变量是可以访问时才生成了，于是在扩展中直接zend_hash_find就找不到了。</p>
+
+<h2>解决办法</h2>
+
+<p>既然原因是没有自动注册_SERVER ，于是可以加以下代码暴力注册之。</p>
+
+<div>
+  <pre><code class='c'>zend_bool jit_init = (PG(auto_globals_jit) &amp;&amp; !PG(register_globals) &amp;&amp; 
+                    !PG(register_long_arrays));
+    if (jit_init) { 
+        zend_is_auto_global(ZEND_STRL(&quot;_SERVER&quot;) TSRMLS_CC);
+    }</code></pre>
+</div>
+
+
+<h2>附：另一种方法</h2>
+
+<p>还有另一种方法来获取$_SERVER[&#8216;SCRIPT_NAME&#8217;],原理大同小异，不解释:</p>
+
+<div>
+  <pre><code class='c'>PHP_FUNCTION(peblog_get_html)
+    {   
+
+        zval **SERVER   = NULL;
+        zval **ret      = NULL;
+
+
+       zend_bool jit_init = (PG(auto_globals_jit) &amp;&amp; !PG(register_globals) 
+                         &amp;&amp; !PG(register_long_arrays));
+        if (jit_init) { 
+            zend_is_auto_global(ZEND_STRL(&quot;_SERVER&quot;) TSRMLS_CC);
+        }   
+
+        (void)zend_hash_find(&amp;EG(symbol_table), 
+                     ZEND_STRS(&quot;_SERVER&quot;), (void **)&amp;SERVER);
+        if (zend_hash_find(Z_ARRVAL_PP(SERVER), 
+               ZEND_STRS(&quot;SCRIPT_FILENAME&quot;),
+                (void **)&amp;ret) == FAILURE )
+        {
+            RETVAL_STRING(&quot;No SCRIPT_FILENAME. &quot;, 1);
+        }
+        else
+        {
+            char *str = NULL;
+            str     = estrdup(Z_STRVAL_P(*ret));
+
+            RETVAL_STRING(str, 1);
+        }
+    }</code></pre>
+</div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[由opcodes找到其处理函数的方法]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements/"/>
+    <updated>2011-08-28T03:02:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<h2>Debug法：</h2>
+
+<p>在学习研究PHP内核的过程中，经常通过opcode来查看代码的执行顺序，这些opcode会存储于一个数组op_array中，然后在zend_vm_execute.h中的execute函数中使用以下代码来依次执行：</p>
+
+<div>
+  <pre><code class='c'>ZEND_API void execute(zend_op_array *op_array TSRMLS_DC)
+     {
+     ...
+     zend_vm_enter:
+     ....
+     if ((ret = EX(opline)-&gt;handler(execute_data TSRMLS_CC)) &gt; 0) {
+                 switch (ret) {
+                     case 1:
+                         EG(in_execution) = original_in_execution;
+                         return;
+                     case 2:
+                         op_array = EG(active_op_array);
+                         goto zend_vm_enter;
+                     case 3:
+                         execute_data = EG(current_execute_data);
+                     default:
+                         break;
+                 }
+     ｝
+        ...
+     }</code></pre>
+</div>
+
+
+<p>在执行的过程中，EX(opline)->handler（展开后为 *execute_data->opline->handler）存储了处理当前操作的函数名称。如果这时在gdb中 用p命令，就可以打印出类似这样的结果：</p>
+
+<div>
+  <pre><code class='c'>(gdb) p *execute_data-&gt;opline-&gt;handler
+     $1 = {int (zend_execute_data *)} 0x10041f394 &lt;ZEND_NOP_SPEC_HANDLER&gt;</code></pre>
+</div>
+
+
+<p>就可以知道当前要执行的处理函数了，这种是debug的方法。</p>
+
+<h2>计算法：</h2>
+
+<p>那么，在PHP内核中是如何将一个opcode转化为函数的呢？ 在PHP内部是使用zend_vm_get_opcode_handler()函数来进行转化的。</p>
+
+<div>
+  <pre><code class='c'>static opcode_handler_t
+     zend_vm_get_opcode_handler(zend_uchar opcode, zend_op* op)
+     {
+             static const int zend_vm_decode[] = {
+                 _UNUSED_CODE, /* 0              */
+                 _CONST_CODE,  /* 1 = IS_CONST   */
+                 _TMP_CODE,    /* 2 = IS_TMP_VAR */
+                 _UNUSED_CODE, /* 3              */
+                 _VAR_CODE,    /* 4 = IS_VAR     */
+                 _UNUSED_CODE, /* 5              */
+                 _UNUSED_CODE, /* 6              */
+                 _UNUSED_CODE, /* 7              */
+                 _UNUSED_CODE, /* 8 = IS_UNUSED  */
+                 _UNUSED_CODE, /* 9              */
+                 _UNUSED_CODE, /* 10             */
+                 _UNUSED_CODE, /* 11             */
+                 _UNUSED_CODE, /* 12             */
+                 _UNUSED_CODE, /* 13             */
+                 _UNUSED_CODE, /* 14             */
+                 _UNUSED_CODE, /* 15             */
+                 _CV_CODE      /* 16 = IS_CV     */
+             };  
+             return zend_opcode_handlers[
+                  opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5
+                          + zend_vm_decode[op-&gt;op2.op_type]];
+                             }</code></pre>
+</div>
+
+
+<p>由上面的代码可以看到，opcode到php内部函数的转化是由下面的公式来进行的：</p>
+
+<div>
+  <pre><code class='c'>opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5
+                 + zend_vm_decode[op-&gt;op2.op_type]</code></pre>
+</div>
+
+
+<p>然后将其计算的数值作为索引到zend_init_opcodes_handlers数组中进行查找。不过，这个数组实在是太大了，有3851个元素，查找和计算都比较麻烦。</p>
+
+<h2>命名查找法：</h2>
+
+<p>上面的两种方法其实都是比较麻烦的，在定位某一opcode的实现执行代码的过程中，都不得不对程序进行执行或者计算中间值。而在追踪的过程中，我发现处理函数名称是有一定规则的。 这里以函数调用的opcode为例，调用某函数的opcode及其对应在php内核中实现的处理函数如下：</p>
+
+<div>
+  <pre><code class='c'>//函数调用：
+     DO_FCALL  ==&gt;  ZEND_DO_FCALL_SPEC_CONST_HANDLER
+
+     //变量赋值：
+     ASSIGN     =&gt;      ZEND_ASSIGN_SPEC_VAR_CONST_HANDLER
+                        ZEND_ASSIGN_SPEC_VAR_TMP_HANDLER
+                        ZEND_ASSIGN_SPEC_VAR_VAR_HANDLER
+                        ZEND_ASSIGN_SPEC_VAR_CV_HANDLER            
+     //变量加法：
+     ASSIGN_SUB =&gt;   ZEND_ASSIGN_SUB_SPEC_VAR_CONST_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_TMP_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_VAR_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_UNUSED_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_CV_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_CONST_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_TMP_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_VAR_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_UNUSED_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_CV_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_CONST_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_TMP_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_VAR_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_UNUSED_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_CV_HANDLER,</code></pre>
+</div>
+
+
+<p>在上面的命名就会发现，其实处理函数的命名是有以下规律的：</p>
+
+<div>
+  <pre><code class='c'>ZEND_[opcode]_SPEC_(变量类型1)_(变量类型2)_HANDLER</code></pre>
+</div>
+
+
+<p>这里的变量类型1和变量类型2是可选的，如果同时存在，那就是左值和右值，归纳有下几类： VAR TMP CV UNUSED CONST 可以根据相关的执行场景来判定。</p>
+
+<h2>LOG记录法：</h2>
+
+<p>这种方法是上面计算方法的的升级，就是在zend_vm_get_opcode_handler 方法改写为以下代码：</p>
+
+<div>
+  <pre><code class='c'>static opcode_handler_t
+     zend_vm_get_opcode_handler(zend_uchar opcode, zend_op* op)
+     {
+             static const int zend_vm_decode[] = {
+                 _UNUSED_CODE, /* 0              */
+                 _CONST_CODE,  /* 1 = IS_CONST   */
+                 _TMP_CODE,    /* 2 = IS_TMP_VAR */
+                 _UNUSED_CODE, /* 3              */
+                 _VAR_CODE,    /* 4 = IS_VAR     */
+                 _UNUSED_CODE, /* 5              */
+                 _UNUSED_CODE, /* 6              */
+                 _UNUSED_CODE, /* 7              */
+                 _UNUSED_CODE, /* 8 = IS_UNUSED  */
+                 _UNUSED_CODE, /* 9              */
+                 _UNUSED_CODE, /* 10             */
+                 _UNUSED_CODE, /* 11             */
+                 _UNUSED_CODE, /* 12             */
+                 _UNUSED_CODE, /* 13             */
+                 _UNUSED_CODE, /* 14             */
+                 _UNUSED_CODE, /* 15             */
+                 _CV_CODE      /* 16 = IS_CV     */
+             };  
+
+             //很显然，我们把opcode和相对应的写到了/tmp/php.log文件中
+             int op_index;
+             op_index = opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5 + zend_vm_decode[op-&gt;op2.op_type];
+
+             FILE *stream;
+             if((stream = fopen(&quot;/tmp/php.log&quot;, &quot;a+&quot;)) != NULL){
+                 fprintf(stream, &quot;opcode: %d , zend_opcode_handlers_index:%d\n&quot;, opcode, op_index);
+             }    
+             fclose(stream);
+
+
+             return zend_opcode_handlers[
+                  opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5
+                          + zend_vm_decode[op-&gt;op2.op_type]];
+                             }</code></pre>
+</div>
+
+
+<p>然后，就可以在/tmp/php.log文件中生成类似如下结果:</p>
+
+<div>
+  <pre><code class='c'>opcode: 38 , zend_opcode_handlers_index:970</code></pre>
+</div>
+
+
+<p>数字38是opcode的，我们可以这里查到： http://php.net/manual/en/internals2.opcodes.list.php
+数字970是topcode_handler_t labels[] 索引，里面对应了处理函数的名称，对应源码文件是：Zend/zend_vm_execute.h （第30077行左右）。 这是一个超大的数组，php5.3.4中有3851个元素，在上面的例子里，看样子我们要数到第970个了，当然，有很多种方法来避免这种无意义的重劳动，你懂的。</p>
+
+<p>经过鸟哥（@laruence)的提醒，本文仅适合于ZendVM分发方式为CALL的情形。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VIM中换行替换之迷]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell/"/>
+    <updated>2011-08-08T17:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell</id>
+    <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory
+我们在shell下生成一个test文件：</p>
+
+<pre><code>$ echo -e "i\rlove\rWQ." &gt;test
+</code></pre>
+
+<p>然后，用vim打开，果然是</p>
+
+<pre><code>I^Mlove^MWQ. 
+</code></pre>
+
+<p>这时执行： :%s/\r/\r/g 发现文件正常了。
+但是这里面有一个不正常，:%s/\r/\r/g 这个命令是把\r替换成了\r , 应该什么都没变化,怎么就把文件的换行符给替换了呢？</p>
+
+<p>仔细检查了一下，发现这个问题还要从各个系统不同的换行符开始，下面的这个表格大家比较熟悉了：</p>
+
+<table>
+<thead>
+<tr>
+<th> </th>
+<th> windows/dos </th>
+<th> unix </th>
+<th> mac</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>换行符  　　  </td>
+<td> CRLF      </td>
+<td>     LF </td>
+<td>　　 CR</td>
+</tr>
+<tr>
+<td>在SHELL中的表示 </td>
+<td> \r\n  　 </td>
+<td>      \n </td>
+<td>　\r</td>
+</tr>
+<tr>
+<td>16进制符    　　</td>
+<td> 0d0a  　 </td>
+<td>      0a </td>
+<td> 　0d</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>:%s/\r/\r/g 这个命令中，第一个\r与第二个\r的意义是可能不相同的；
+第一个\r代表 0d ,也就是CR；
+而第二个\r，是VIM自行根据fileformat内置变量判断决定的，见下表：</p>
+
+<table>
+<thead>
+<tr>
+<th>　　　　　      </th>
+<th>    　　　 \n  </th>
+<th>　　 \r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:set ff=dos 　　</td>
+<td>   　　　 00   </td>
+<td> 　 0d0a(\n\r)</td>
+</tr>
+<tr>
+<td>:set ff=unix 　 </td>
+<td>   　　　 00   </td>
+<td> 　 0a(\n)</td>
+</tr>
+<tr>
+<td>:set ff=mac 　　</td>
+<td>   　　　 00   </td>
+<td> 　 0d(\r)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>OK,现在就可以解释上面的 :%s/\r/\r/g 为什么会把 0d变成0a了。</p>
+
+<p>另外还有两个小Tip:</p>
+
+<ul>
+<li>根据fileformat的不同，vim会自动在文件的最未尾添加一个换行符，除非启动时vim -b xxx , 同时还要开启 set noeol才行。</li>
+<li>任何情形下，VIM中的\n都是00, 在VIM中会显示为<sup>@</sup></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[某个周未的随想（关于电子产品）]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele/"/>
+    <updated>2011-06-26T04:26:09+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele</id>
+    <content type="html"><![CDATA[<p>这是第一次用OmmWriter写东西，本来就知道，这个软件是一个非常有意境的软件，而真正用它来写点什么的时候，才感觉到一种平静，扑面而来，在轻轻的音乐声中，每次敲击的打字声……让人心生静谧。</p>
+
+<p>写点什么呢，发现自己最近的生活中充斥了电子产品、还有编程。终于有了心情，整理一下。</p>
+
+<p>哗，就电子产品来说，其实很多东西，自己想要的，并不是最终得到的。 电子产品广告的成功就在于营造出一种美丽的可能性，比如你可以在任何地方自由的上网， 而事实上你要为此付出相当多的代价，而且，在付出如此多的代价之后， 你发现，其实你并不怎么需要这个功能。</p>
+
+<h3>IPAD</h3>
+
+<p>ipad是非常好玩的，不过，说实话，它没有想像中的美好。我以为，有了更大的屏幕、多种多样的色彩、支持更多的格式，它就可以让我更多更好的读上更多喜欢的书……而事实上，最后总是看各种新闻、RSS、乱七八糟的就把时间过去了。还有上网，邮件，IM，由于不能多任务而非常多的不方便，加之上下班时间不多，所以基本没有怎么用了，总的来说， ipad的购买，基本上比较失败，给老婆买的还比较成功。</p>
+
+<h3>Mac Book Air</h3>
+
+<p>我灰常喜欢air，因为其实我的电脑并不需要多么强悍的性能，固然强悍的性能可以用起来更爽，但由于总是要带着电脑四处乱跑，权衡起来，我宁愿打开word文档时慢上个2、3秒，而不愿背负着几公斤重的大包。对我来说，用苹果的什么笔记本根本不重要吧，只要上面跑的是mac的os，对于snow leopard或者正在使用着的lion，感觉这种操作系统，真的非常的让人着迷。 所以说，如果再给我一次机会，我还会选择Air（而且应该不会装上windows系统） 。</p>
+
+<h3>Kindle</h3>
+
+<p> 哇，这是一个什么样的设备，它本身蕴藏着的能量和影响，远远大于它自身物理设备的价值。说实话，当我把100本电子放到ipad中的时候，我没感觉自己拥有100本书。但我把100本书放到kindle里面的时候，我感觉自己在带着100本书旅行。 怎么形容这种感觉呢，一块没有色彩，只能看书，听点单薄的音乐的设备，甚至如果你在里面放100本以上的书，都会感觉翻找起来不那么方便。如果你关上灯，OK，你将什么也看不到了。这就是kindle……我对它唯一的遗憾，可能就是没有直接买9.7寸屏幕的，老婆大人执跟我相反的观点。</p>
+
+<h3>其他</h3>
+
+<p>其他都是各种小东西，已经无所谓成功或者失败，早晚用的着就是了。
+最后，如果上帝要送我一件电子产品或者其他什么东西，我希望是：一只咖啡杯（最好还附个小勺子）。
+谢谢<strong>娜娜</strong>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[从opcodes看{$a}与${a}的区别]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array/"/>
+    <updated>2010-11-23T15:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array</id>
+    <content type="html"><![CDATA[<p>突然用到类似{$a}与${a}这样子的表达式，大约知道两者的区别，用OPCODE来做一个验证，记录如下:</p>
+
+<h3>程序一：</h3>
+
+<div>
+  <pre><code class='php'>&lt;?php
+    $a = 'abc';
+    $abc = 'ok';
+    echo ${abc};
+?&gt;</code></pre>
+</div>
+
+
+<h4>opcode ：(点击图片放大)</h4>
+
+<p><img src="http://pemsys.duapp.com/blog/opcode_array_1.jpg" alt="php_zend_return^_^" /></p>
+
+<h3>程序二：</h3>
+
+<div>
+  <pre><code class='php'>&lt;?php
+$a = 'abc';
+$abc = 'ok';
+echo {$abc};
+?&gt;</code></pre>
+</div>
+
+
+<h4>opcode ：(点击图片放大)</h4>
+
+<p><img src="http://pemsys.duapp.com/blog/opcode_array_2.jpg" alt="php_zend_return^_^" /></p>
+
+<h3>程序一 ${abc} 解释：</h3>
+
+<p>ASSIGN 就是赋值，所以第一二步，都是赋值的操作，关键是第三步的 FETCH_CONSTANT 。
+FETCH_CONSTANT 是在所有的常量中寻找abc 这个变量(当然没找到)，然后将abc赋值给临时变量~2
+然后FETCH_R取到~2变量名的值，ECHO输出；</p>
+
+<h3>程序二 {$abc} 解释：</h3>
+
+<p>减少了FETCH_CONSTANT的步骤，多了ADD_VAR,这是一个赋值语句。
+由于使用了“{$abc}” 语法，需要另一个临时变量来存储结果。</p>
+
+<h3>结论：</h3>
+
+<p>${abc} 会先去常量中寻求abc，如果有值则替代之，没有，则进行与{$abc}相同的操作；</p>
+
+<p>{$abc} 与 $abc 相同；</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PHP扩展中自定义函数返回值与ZVAL]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval/"/>
+    <updated>2010-11-15T11:21:11+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval</id>
+    <content type="html"><![CDATA[<p>如要在PHP扩展中返回一个整数，那是相当的容易滴：<!--more--></p>
+
+<div>
+  <pre><code class='c'>PHP_FUNCTION(rv_long)
+{
+    RETURN_LONG(9999);
+}</code></pre>
+</div>
+
+
+<p>也可以写成这样子：</p>
+
+<div>
+  <pre><code class='c'>PHP_FUNCTION(rv_long)
+{
+    RETVAL_LONG(9999);
+    return;
+}</code></pre>
+</div>
+
+
+<p>还可以写成这样子：</p>
+
+<div>
+  <pre><code class='c'>PHP_FUNCTION(rv_long)
+{
+    Z_TYPE_P(return_value) = IS_LONG;
+    Z_LVAL_P(return_value) = 9999;
+    return;
+}</code></pre>
+</div>
+
+
+<p>方法看起来很多么……其实是同一种方法的“渐进版”。</p>
+
+<p>如下图：
+<img src="http://zhangabc.my.phpcloud.com/wp-content/uploads/2010/11/return_value.png" alt="php_zend_return^_^" /></p>
+
+<p>OK,本质是搞了个叫returen_value的zval,……至于zval , 是PHP的C源代码级别的最核心的结构。</p>
+
+<p>PHP所有类型的变量都是以zval这个结构体来存储。PHP在源代码级别提供了大量用于操作zval变量的宏。</p>
+
+<p>上面是整数的例子，其他类型也类似：</p>
+
+<div>
+  <pre><code class='c'>ZVAL_NULL(return_value)
+RETVAL_NULL()
+
+ZVAL_BOOL(return_value, bval)
+RETVAL_BOOL(bval)
+
+ZVAL_TRUE(return_value)
+RETVAL_TRUE
+
+ZVAL_FALSE(return_value)
+RETVAL_FALSE
+
+ZVAL_LONG(return_value, lval)
+RETVAL_LONG(lval)
+
+ZVAL_DOUBLE(return_value, dval)
+RETVAL_DOUBLE(dval)
+
+ZVAL_STRING(return_value, str, dup)
+RETVAL_STRING(str, dup)
+
+ZVAL_STRINGL(return_value, str, len, dup)
+RETVAL_STRINGL(str,len,dup)
+
+ZVAL_RESOURCE(return_value, rval)
+RETVAL_RESOURCE(rval)</code></pre>
+</div>
+
+
+<p>不过，引用和数组还是稍有不同的……（未完不续）</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[你得允许男人在工作时找点乐趣]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/09/05/find-fun/"/>
+    <updated>2010-09-05T05:19:09+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/09/05/find-fun</id>
+    <content type="html"><![CDATA[<h3>“你得充许男人在工作时找点乐趣……”</h3>
+
+<p>这句话星际2里一个战士在进行战斗时的台词。这句台词从某种意义上折射出暴雪团队在制作游戏时的“游戏心态”。 最近还看了一个记录片，名字叫《皮克斯的世界》，描述的是皮克斯的人是如何进行制作动画的工作，那个总导演说：当我第一次了解动画是如何制作出来的时候，我深深的爱上了这个事情，我决定我要用这个工作来养活自己。</p>
+
+<p>回想在高中时代自己做了第一个简陋的个人主页的时候，我还没真正了解到编写代码可能会做为自己的职业，而后来在大学里的不断努力，也只是因为好玩，以为写代码很酷，非常有成就感。</p>
+
+<p>后来出现在北京，才发现自己知道的是多么的少，而曾写过的，又是多么“惨”的程序。于是订学习计划，确定一个又一个目标，渐渐一路走来，却发现代码在自己毫无知觉的过程中，成为一种工作。</p>
+
+<p>……跑了一年，擦，差点跑偏了，xx是最爽的事情，因为它是最原始的冲动。学习也是，编程也是，工程师最原始的动力，不应该仅是工作，更不应该是提升实力赚更多的钱，应该是乐趣。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[三人搬家记]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/07/27/home/"/>
+    <updated>2010-07-27T22:19:09+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/07/27/home</id>
+    <content type="html"><![CDATA[<p>终于又搬家了，从福缘门，到唐家岭，最后住到龙华园。俺算是经历了一个人在北京的另类“北漂”了，呵呵。</p>
+
+<h3>首先，介绍本次搬家主角：</h3>
+
+<p>胡总：有钱人，但不喜奢华，为人俭朴大方，理财能手（我的学习目标，5555）；
+阿朱：大学室友，沉默是金的完美诠释者，手脚灵活，脑容量大极聪明；
+我：……</p>
+
+<h3>第一回合，打包啦！！！</h3>
+
+<p>在一个沉闷的中午，我和阿朱开始把所有的东西放到一只只袋子里，事实证明，从混乱到有序是一个反复、混乱而又时刻伴随着痛苦的过程。但是，集智慧与能力于一身的我们，还是把所有的东西全装起来啦！</p>
+
+<h3>第二回合，装车！！！</h3>
+
+<p>咳咳咳，这个回合我没有参与，等我下班赶到时，胡总和阿朱已经把车装好了，我在打了个电话给WQ后，上车坐得很是淡定，心中暗爽不已。</p>
+
+<h3>第三回合，上楼！！！</h3>
+
+<p>我们吐血了，因为我们租的是6楼，而且没有电梯，当我们把最后的一箱子书搬到楼上，心情是复杂的，身上是光滑的。值得一提的是，由于我没有赶上装车大会战，所以这个时候，我还是一个生力军，发挥了一个年轻男大学毕业生应该发挥的积极带头模范作用……（谁扔的砖头） 最后，大家趴在楼梯扶手上决定暂不收拾屋子了，第一时间找床睡之。</p>
+
+<h3>总结</h3>
+
+<p>这次搬家，历时10几个小时，横跨3天时间，是一次团结的搬家，是一次胜利的搬家，虽然在过程中出现了种种问题，产生种种困难，但是，我们三个人搬成功啦，这是我们的胜利，是人民的胜利，谢谢国家！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[初读中庸]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/07/06/zhongyong/"/>
+    <updated>2010-07-06T22:19:09+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/07/06/zhongyong</id>
+    <content type="html"><![CDATA[<p>本来以为，像《中庸》这样的书，都应该丢到鲁迅笔下的“故纸堆”里。前一阵，不知道大脑里哪根筋搭错了弦，或者说终于有一根筋搭对了弦，我买了《中庸》这本书，注解很精彩，是朱子的。</p>
+
+<p>读了几天，发现其实几百字甚至二三百字的小短文，竟如此难以“理解”，这里不是古文的阅读障碍，而是其中的道理，的确看起来简单而又博大。</p>
+
+<p>从小到大，身边的人总是说我偏激，自己一直不觉得，直到读了《中庸》，突然很后悔，这本书，我应该在十年前读，然后在最近的十年里体会。</p>
+
+<p>第一章，天命。喜怒哀乐未发谓之中，发而皆中节谓之和。  唉，狂喜，惨悲，暴怒，……，怎么能不偏激？</p>
+
+<p>第十章，问强。回想过去的生活，自己的确是要强的人，有时候甚至玩游戏也非胜利不可，想来真是，而真正的强，只有四个字，“和而不流”，想想都感觉汗颜。</p>
+
+<p>咦？其他的章节呢？有的看了，还没能领悟，有的还没来得及看，顺手记之，权当草纸一张，有何不可？何必为赋新词而强吟，为写博客而催熟？</p>
+
+<p>人生如梦，际遇似云，悠然而来，自在而行，岂不快哉！</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mac | Er.z]]></title>
+  <link href="http://www.zhangabc.com/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://www.zhangabc.com/"/>
+  <updated>2013-08-04T05:03:52+08:00</updated>
+  <id>http://www.zhangabc.com/</id>
+  <author>
+    <name><![CDATA[Er.Z]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[跳出功G夫F网W的方法]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/08/31/go-agent/"/>
+    <updated>2012-08-31T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/08/31/go-agent</id>
+    <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
+
+<p>YAML的格式导致jekyll未名的出错，花了几个小时的时间。  <br/>
+测试文章发布，记录一下技术宅记录跳出功G夫F网W的方法:</p>
+
+<h3>第一步，创建GAE应用，得到appid</h3>
+
+<p>去gae 申请个帐号，创建个应用，这样就有appid了。</p>
+
+<h3>第二步，开始部署goagent：</h3>
+
+<p>打开shell , 执行下列命令，会让你输入appid \ google 邮箱 、密码</p>
+
+<p><div>
+  <pre><code class='bash'>&lt;/p&gt;
+
+&lt;p&gt;   $ wget https://nodeload.github.com/goagent/goagent/zipball/2.0 -O goagent.zip
+   $ unzip goagent.zip -d goagent
+   $ python goagent/server/uploader.zip
+   $ python goagent/local/proxy.py&lt;/p&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<h3>第三步 使用</h3>
+
+<h4>chrome</h4>
+
+<pre><code>* wget http://goagent.googlecode.com/files/SwitchyOptions.bak
+* 安装SwitchySharp插件后导入上面下载的SwitchyOptions.bak配置即可；
+* 需要在本机安装证书以防不测：goagent/local/CA.crt；
+</code></pre>
+
+<h4>firefox同理</h4>
+
+<h4>IE或者windows下的话。。。</h4>
+
+<h3>Q &amp; A</h3>
+
+<pre><code>官方网站： http://code.google.com/p/goagent/
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[目前Mac下最快的输入法]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/05/13/mac-best-input-method/"/>
+    <updated>2012-05-13T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/05/13/mac-best-input-method</id>
+    <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
+
+<h2>背景</h2>
+
+<p>先先后后使用过 QQ、搜狗、.... wbim 各种输入法，先罗列一下这些输入法的不爽之处：</p>
+
+<ol>
+<li>每种输入法安装之后要注销系统~ ，安装输入法需要注销登录，中止正在进行的其他工作；</li>
+<li>切换时有延迟，尽管我使用的是SSD，总还是能感觉到一点小延迟，不过现在的输入法好很多；</li>
+<li>...</li>
+</ol>
+
+
+<h2>主角出场： 鼠鬚管</h2>
+
+<h3>优点：</h3>
+
+<p>迅速，非常迅速，安装不用注销系统，切换<strong>不哆嗦</strong>;</p>
+
+<h3>缺点：</h3>
+
+<p>配置需要自己改配置文件。。。e...如果你用过vim的话，相信这个配置文件对你来说非常简单，但女王一般是很难理解的。</p>
+
+<p>对了，这个输入法是跨平台的，但三个平台是三种不同的程序和名字：</p>
+
+<pre><code>Linux ： 中州韻 | ibus-rime 
+MAC： 鼠鬚管 | Squirrel 
+Windows： 小狼毫 | Weasel 
+</code></pre>
+
+<p>三种平台，因为程序代码完全不同 ， 所以配置也不太一样，这个需要注意下。而且这货是开源的，大家可以自行YY，哦哦</p>
+
+<p>最后是项目地址：</p>
+
+<p> <a href="http://code.google.com/p/rimeime/" title="^o^">http://code.google.com/p/rimeime</a></p>
+]]></content>
+  </entry>
+  
+</feed>

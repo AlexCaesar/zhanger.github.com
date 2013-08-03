@@ -1,0 +1,939 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Er.z</title>
+  <meta name="author" content="Er.Z">
+
+  
+  <meta name="description" content="Er.Z phper + iOS develpor => entrepreneurial developer. Aug 28th, 2011 Comments php 由opcodes找到其处理函数的方法 Included file &#8216;JB/setup&#8217; not &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.zhangabc.com/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Er.z" type="application/atom+xml">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37698744-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
+        <li ><a href="/index.html">Blog</a></li>
+    
+        <li ><a href="/blog/archives/index.html">Archives</a></li>
+    
+</ul>
+
+<ul class="nav pull-right">
+    
+    <li><a href="http://github.com/zhanger" title="Github Profile"><i class="icon-github-sign social-navbar"></i></a></li>
+    
+    
+    
+    <li><a href="http://twitter.com/zhangabc" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+    <div class="span12">
+      <div class="row-fluid">
+        <div id="content">
+          <div class="jumbotron">
+  <div class="container">
+    Er.Z 
+    <h3 class="tagline">phper  +  iOS develpor => entrepreneurial developer.</h3>
+  </div>
+</div>
+
+
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2011-08-28T03:02:49+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2011</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/php/"><span class="badge">php</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2011/08/28/find-opcodes-to-implements/">由opcodes找到其处理函数的方法</a></h1>
+      <p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
+
+<h2>Debug法：</h2>
+
+<p>在学习研究PHP内核的过程中，经常通过opcode来查看代码的执行顺序，这些opcode会存储于一个数组op_array中，然后在zend_vm_execute.h中的execute函数中使用以下代码来依次执行：</p>
+
+<div>
+  <pre><code class='c'>ZEND_API void execute(zend_op_array *op_array TSRMLS_DC)
+     {
+     ...
+     zend_vm_enter:
+     ....
+     if ((ret = EX(opline)-&gt;handler(execute_data TSRMLS_CC)) &gt; 0) {
+                 switch (ret) {
+                     case 1:
+                         EG(in_execution) = original_in_execution;
+                         return;
+                     case 2:
+                         op_array = EG(active_op_array);
+                         goto zend_vm_enter;
+                     case 3:
+                         execute_data = EG(current_execute_data);
+                     default:
+                         break;
+                 }
+     ｝
+        ...
+     }</code></pre>
+</div>
+
+
+<p>在执行的过程中，EX(opline)->handler（展开后为 *execute_data->opline->handler）存储了处理当前操作的函数名称。如果这时在gdb中 用p命令，就可以打印出类似这样的结果：</p>
+
+<div>
+  <pre><code class='c'>(gdb) p *execute_data-&gt;opline-&gt;handler
+     $1 = {int (zend_execute_data *)} 0x10041f394 &lt;ZEND_NOP_SPEC_HANDLER&gt;</code></pre>
+</div>
+
+
+<p>就可以知道当前要执行的处理函数了，这种是debug的方法。</p>
+
+<h2>计算法：</h2>
+
+<p>那么，在PHP内核中是如何将一个opcode转化为函数的呢？ 在PHP内部是使用zend_vm_get_opcode_handler()函数来进行转化的。</p>
+
+<div>
+  <pre><code class='c'>static opcode_handler_t
+     zend_vm_get_opcode_handler(zend_uchar opcode, zend_op* op)
+     {
+             static const int zend_vm_decode[] = {
+                 _UNUSED_CODE, /* 0              */
+                 _CONST_CODE,  /* 1 = IS_CONST   */
+                 _TMP_CODE,    /* 2 = IS_TMP_VAR */
+                 _UNUSED_CODE, /* 3              */
+                 _VAR_CODE,    /* 4 = IS_VAR     */
+                 _UNUSED_CODE, /* 5              */
+                 _UNUSED_CODE, /* 6              */
+                 _UNUSED_CODE, /* 7              */
+                 _UNUSED_CODE, /* 8 = IS_UNUSED  */
+                 _UNUSED_CODE, /* 9              */
+                 _UNUSED_CODE, /* 10             */
+                 _UNUSED_CODE, /* 11             */
+                 _UNUSED_CODE, /* 12             */
+                 _UNUSED_CODE, /* 13             */
+                 _UNUSED_CODE, /* 14             */
+                 _UNUSED_CODE, /* 15             */
+                 _CV_CODE      /* 16 = IS_CV     */
+             };  
+             return zend_opcode_handlers[
+                  opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5
+                          + zend_vm_decode[op-&gt;op2.op_type]];
+                             }</code></pre>
+</div>
+
+
+<p>由上面的代码可以看到，opcode到php内部函数的转化是由下面的公式来进行的：</p>
+
+<div>
+  <pre><code class='c'>opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5
+                 + zend_vm_decode[op-&gt;op2.op_type]</code></pre>
+</div>
+
+
+<p>然后将其计算的数值作为索引到zend_init_opcodes_handlers数组中进行查找。不过，这个数组实在是太大了，有3851个元素，查找和计算都比较麻烦。</p>
+
+<h2>命名查找法：</h2>
+
+<p>上面的两种方法其实都是比较麻烦的，在定位某一opcode的实现执行代码的过程中，都不得不对程序进行执行或者计算中间值。而在追踪的过程中，我发现处理函数名称是有一定规则的。 这里以函数调用的opcode为例，调用某函数的opcode及其对应在php内核中实现的处理函数如下：</p>
+
+<div>
+  <pre><code class='c'>//函数调用：
+     DO_FCALL  ==&gt;  ZEND_DO_FCALL_SPEC_CONST_HANDLER
+
+     //变量赋值：
+     ASSIGN     =&gt;      ZEND_ASSIGN_SPEC_VAR_CONST_HANDLER
+                        ZEND_ASSIGN_SPEC_VAR_TMP_HANDLER
+                        ZEND_ASSIGN_SPEC_VAR_VAR_HANDLER
+                        ZEND_ASSIGN_SPEC_VAR_CV_HANDLER            
+     //变量加法：
+     ASSIGN_SUB =&gt;   ZEND_ASSIGN_SUB_SPEC_VAR_CONST_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_TMP_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_VAR_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_UNUSED_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_VAR_CV_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_CONST_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_TMP_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_VAR_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_UNUSED_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_UNUSED_CV_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_CONST_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_TMP_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_VAR_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_UNUSED_HANDLER,
+                         ZEND_ASSIGN_SUB_SPEC_CV_CV_HANDLER,</code></pre>
+</div>
+
+
+<p>在上面的命名就会发现，其实处理函数的命名是有以下规律的：</p>
+
+<div>
+  <pre><code class='c'>ZEND_[opcode]_SPEC_(变量类型1)_(变量类型2)_HANDLER</code></pre>
+</div>
+
+
+<p>这里的变量类型1和变量类型2是可选的，如果同时存在，那就是左值和右值，归纳有下几类： VAR TMP CV UNUSED CONST 可以根据相关的执行场景来判定。</p>
+
+<h2>LOG记录法：</h2>
+
+<p>这种方法是上面计算方法的的升级，就是在zend_vm_get_opcode_handler 方法改写为以下代码：</p>
+
+<div>
+  <pre><code class='c'>static opcode_handler_t
+     zend_vm_get_opcode_handler(zend_uchar opcode, zend_op* op)
+     {
+             static const int zend_vm_decode[] = {
+                 _UNUSED_CODE, /* 0              */
+                 _CONST_CODE,  /* 1 = IS_CONST   */
+                 _TMP_CODE,    /* 2 = IS_TMP_VAR */
+                 _UNUSED_CODE, /* 3              */
+                 _VAR_CODE,    /* 4 = IS_VAR     */
+                 _UNUSED_CODE, /* 5              */
+                 _UNUSED_CODE, /* 6              */
+                 _UNUSED_CODE, /* 7              */
+                 _UNUSED_CODE, /* 8 = IS_UNUSED  */
+                 _UNUSED_CODE, /* 9              */
+                 _UNUSED_CODE, /* 10             */
+                 _UNUSED_CODE, /* 11             */
+                 _UNUSED_CODE, /* 12             */
+                 _UNUSED_CODE, /* 13             */
+                 _UNUSED_CODE, /* 14             */
+                 _UNUSED_CODE, /* 15             */
+                 _CV_CODE      /* 16 = IS_CV     */
+             };  
+
+             //很显然，我们把opcode和相对应的写到了/tmp/php.log文件中
+             int op_index;
+             op_index = opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5 + zend_vm_decode[op-&gt;op2.op_type];
+
+             FILE *stream;
+             if((stream = fopen(&quot;/tmp/php.log&quot;, &quot;a+&quot;)) != NULL){
+                 fprintf(stream, &quot;opcode: %d , zend_opcode_handlers_index:%d\n&quot;, opcode, op_index);
+             }    
+             fclose(stream);
+
+
+             return zend_opcode_handlers[
+                  opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5
+                          + zend_vm_decode[op-&gt;op2.op_type]];
+                             }</code></pre>
+</div>
+
+
+<p>然后，就可以在/tmp/php.log文件中生成类似如下结果:</p>
+
+<div>
+  <pre><code class='c'>opcode: 38 , zend_opcode_handlers_index:970</code></pre>
+</div>
+
+
+<p>数字38是opcode的，我们可以这里查到： http://php.net/manual/en/internals2.opcodes.list.php
+数字970是topcode_handler_t labels[] 索引，里面对应了处理函数的名称，对应源码文件是：Zend/zend_vm_execute.h （第30077行左右）。 这是一个超大的数组，php5.3.4中有3851个元素，在上面的例子里，看样子我们要数到第970个了，当然，有很多种方法来避免这种无意义的重劳动，你懂的。</p>
+
+<p>经过鸟哥（@laruence)的提醒，本文仅适合于ZendVM分发方式为CALL的情形。</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2011-08-08T17:11:49+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2011</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/SHELL/ENV/"><span class="badge">SHELL/ENV</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2011/08/08/vim-cr-lf-shell/">VIM中换行替换之迷</a></h1>
+      <p>Included file &#8216;JB/setup&#8217; not found in _includes directory
+我们在shell下生成一个test文件：</p>
+
+<pre><code>$ echo -e "i\rlove\rWQ." &gt;test
+</code></pre>
+
+<p>然后，用vim打开，果然是</p>
+
+<pre><code>I^Mlove^MWQ. 
+</code></pre>
+
+<p>这时执行： :%s/\r/\r/g 发现文件正常了。
+但是这里面有一个不正常，:%s/\r/\r/g 这个命令是把\r替换成了\r , 应该什么都没变化,怎么就把文件的换行符给替换了呢？</p>
+
+<p>仔细检查了一下，发现这个问题还要从各个系统不同的换行符开始，下面的这个表格大家比较熟悉了：</p>
+
+<table>
+<thead>
+<tr>
+<th> </th>
+<th> windows/dos </th>
+<th> unix </th>
+<th> mac</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>换行符  　　  </td>
+<td> CRLF      </td>
+<td>     LF </td>
+<td>　　 CR</td>
+</tr>
+<tr>
+<td>在SHELL中的表示 </td>
+<td> \r\n  　 </td>
+<td>      \n </td>
+<td>　\r</td>
+</tr>
+<tr>
+<td>16进制符    　　</td>
+<td> 0d0a  　 </td>
+<td>      0a </td>
+<td> 　0d</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>:%s/\r/\r/g 这个命令中，第一个\r与第二个\r的意义是可能不相同的；
+第一个\r代表 0d ,也就是CR；
+而第二个\r，是VIM自行根据fileformat内置变量判断决定的，见下表：</p>
+
+<table>
+<thead>
+<tr>
+<th>　　　　　      </th>
+<th>    　　　 \n  </th>
+<th>　　 \r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:set ff=dos 　　</td>
+<td>   　　　 00   </td>
+<td> 　 0d0a(\n\r)</td>
+</tr>
+<tr>
+<td>:set ff=unix 　 </td>
+<td>   　　　 00   </td>
+<td> 　 0a(\n)</td>
+</tr>
+<tr>
+<td>:set ff=mac 　　</td>
+<td>   　　　 00   </td>
+<td> 　 0d(\r)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>OK,现在就可以解释上面的 :%s/\r/\r/g 为什么会把 0d变成0a了。</p>
+
+<p>另外还有两个小Tip:</p>
+
+<ul>
+<li>根据fileformat的不同，vim会自动在文件的最未尾添加一个换行符，除非启动时vim -b xxx , 同时还要开启 set noeol才行。</li>
+<li>任何情形下，VIM中的\n都是00, 在VIM中会显示为<sup>@</sup></li>
+</ul>
+
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2011-06-26T04:26:09+08:00" pubdate data-updated="true">Jun 26<span>th</span>, 2011</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/吐槽不断/"><span class="badge">吐槽不断</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2011/06/26/thinking-for-ele/">某个周未的随想（关于电子产品）</a></h1>
+      <p>这是第一次用OmmWriter写东西，本来就知道，这个软件是一个非常有意境的软件，而真正用它来写点什么的时候，才感觉到一种平静，扑面而来，在轻轻的音乐声中，每次敲击的打字声……让人心生静谧。</p>
+
+<p>写点什么呢，发现自己最近的生活中充斥了电子产品、还有编程。终于有了心情，整理一下。</p>
+
+<p>哗，就电子产品来说，其实很多东西，自己想要的，并不是最终得到的。 电子产品广告的成功就在于营造出一种美丽的可能性，比如你可以在任何地方自由的上网， 而事实上你要为此付出相当多的代价，而且，在付出如此多的代价之后， 你发现，其实你并不怎么需要这个功能。</p>
+
+<h3>IPAD</h3>
+
+<p>ipad是非常好玩的，不过，说实话，它没有想像中的美好。我以为，有了更大的屏幕、多种多样的色彩、支持更多的格式，它就可以让我更多更好的读上更多喜欢的书……而事实上，最后总是看各种新闻、RSS、乱七八糟的就把时间过去了。还有上网，邮件，IM，由于不能多任务而非常多的不方便，加之上下班时间不多，所以基本没有怎么用了，总的来说， ipad的购买，基本上比较失败，给老婆买的还比较成功。</p>
+
+<h3>Mac Book Air</h3>
+
+<p>我灰常喜欢air，因为其实我的电脑并不需要多么强悍的性能，固然强悍的性能可以用起来更爽，但由于总是要带着电脑四处乱跑，权衡起来，我宁愿打开word文档时慢上个2、3秒，而不愿背负着几公斤重的大包。对我来说，用苹果的什么笔记本根本不重要吧，只要上面跑的是mac的os，对于snow leopard或者正在使用着的lion，感觉这种操作系统，真的非常的让人着迷。 所以说，如果再给我一次机会，我还会选择Air（而且应该不会装上windows系统） 。</p>
+
+<h3>Kindle</h3>
+
+<p> 哇，这是一个什么样的设备，它本身蕴藏着的能量和影响，远远大于它自身物理设备的价值。说实话，当我把100本电子放到ipad中的时候，我没感觉自己拥有100本书。但我把100本书放到kindle里面的时候，我感觉自己在带着100本书旅行。 怎么形容这种感觉呢，一块没有色彩，只能看书，听点单薄的音乐的设备，甚至如果你在里面放100本以上的书，都会感觉翻找起来不那么方便。如果你关上灯，OK，你将什么也看不到了。这就是kindle……我对它唯一的遗憾，可能就是没有直接买9.7寸屏幕的，老婆大人执跟我相反的观点。</p>
+
+<h3>其他</h3>
+
+<p>其他都是各种小东西，已经无所谓成功或者失败，早晚用的着就是了。
+最后，如果上帝要送我一件电子产品或者其他什么东西，我希望是：一只咖啡杯（最好还附个小勺子）。
+谢谢<strong>娜娜</strong>.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2010-11-23T15:11:49+08:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2010</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/php/"><span class="badge">php</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2010/11/23/php-opcodes-in-array/">从opcodes看{$a}与${a}的区别</a></h1>
+      <p>突然用到类似{$a}与${a}这样子的表达式，大约知道两者的区别，用OPCODE来做一个验证，记录如下:</p>
+
+<h3>程序一：</h3>
+
+<div>
+  <pre><code class='php'>&lt;?php
+    $a = 'abc';
+    $abc = 'ok';
+    echo ${abc};
+?&gt;</code></pre>
+</div>
+
+
+<h4>opcode ：(点击图片放大)</h4>
+
+<p><img src="http://pemsys.duapp.com/blog/opcode_array_1.jpg" alt="php_zend_return^_^" /></p>
+
+<h3>程序二：</h3>
+
+<div>
+  <pre><code class='php'>&lt;?php
+$a = 'abc';
+$abc = 'ok';
+echo {$abc};
+?&gt;</code></pre>
+</div>
+
+
+<h4>opcode ：(点击图片放大)</h4>
+
+<p><img src="http://pemsys.duapp.com/blog/opcode_array_2.jpg" alt="php_zend_return^_^" /></p>
+
+<h3>程序一 ${abc} 解释：</h3>
+
+<p>ASSIGN 就是赋值，所以第一二步，都是赋值的操作，关键是第三步的 FETCH_CONSTANT 。
+FETCH_CONSTANT 是在所有的常量中寻找abc 这个变量(当然没找到)，然后将abc赋值给临时变量~2
+然后FETCH_R取到~2变量名的值，ECHO输出；</p>
+
+<h3>程序二 {$abc} 解释：</h3>
+
+<p>减少了FETCH_CONSTANT的步骤，多了ADD_VAR,这是一个赋值语句。
+由于使用了“{$abc}” 语法，需要另一个临时变量来存储结果。</p>
+
+<h3>结论：</h3>
+
+<p>${abc} 会先去常量中寻求abc，如果有值则替代之，没有，则进行与{$abc}相同的操作；</p>
+
+<p>{$abc} 与 $abc 相同；</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2010-11-15T11:21:11+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2010</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/php/"><span class="badge">php</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2010/11/15/php-extentions-zval/">PHP扩展中自定义函数返回值与ZVAL</a></h1>
+      <p>如要在PHP扩展中返回一个整数，那是相当的容易滴：
+      
+       <a href="/blog/2010/11/15/php-extentions-zval/">Read on &rarr;</a> 
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2010-09-05T05:19:09+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2010</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2010/09/05/find-fun/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/吐槽不断/"><span class="badge">吐槽不断</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2010/09/05/find-fun/">你得允许男人在工作时找点乐趣</a></h1>
+      <h3>“你得充许男人在工作时找点乐趣……”</h3>
+
+<p>这句话星际2里一个战士在进行战斗时的台词。这句台词从某种意义上折射出暴雪团队在制作游戏时的“游戏心态”。 最近还看了一个记录片，名字叫《皮克斯的世界》，描述的是皮克斯的人是如何进行制作动画的工作，那个总导演说：当我第一次了解动画是如何制作出来的时候，我深深的爱上了这个事情，我决定我要用这个工作来养活自己。</p>
+
+<p>回想在高中时代自己做了第一个简陋的个人主页的时候，我还没真正了解到编写代码可能会做为自己的职业，而后来在大学里的不断努力，也只是因为好玩，以为写代码很酷，非常有成就感。</p>
+
+<p>后来出现在北京，才发现自己知道的是多么的少，而曾写过的，又是多么“惨”的程序。于是订学习计划，确定一个又一个目标，渐渐一路走来，却发现代码在自己毫无知觉的过程中，成为一种工作。</p>
+
+<p>……跑了一年，擦，差点跑偏了，xx是最爽的事情，因为它是最原始的冲动。学习也是，编程也是，工程师最原始的动力，不应该仅是工作，更不应该是提升实力赚更多的钱，应该是乐趣。</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2010-07-27T22:19:09+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2010</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2010/07/27/home/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/吐槽不断/"><span class="badge">吐槽不断</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2010/07/27/home/">三人搬家记</a></h1>
+      <p>终于又搬家了，从福缘门，到唐家岭，最后住到龙华园。俺算是经历了一个人在北京的另类“北漂”了，呵呵。</p>
+
+<h3>首先，介绍本次搬家主角：</h3>
+
+<p>胡总：有钱人，但不喜奢华，为人俭朴大方，理财能手（我的学习目标，5555）；
+阿朱：大学室友，沉默是金的完美诠释者，手脚灵活，脑容量大极聪明；
+我：……</p>
+
+<h3>第一回合，打包啦！！！</h3>
+
+<p>在一个沉闷的中午，我和阿朱开始把所有的东西放到一只只袋子里，事实证明，从混乱到有序是一个反复、混乱而又时刻伴随着痛苦的过程。但是，集智慧与能力于一身的我们，还是把所有的东西全装起来啦！</p>
+
+<h3>第二回合，装车！！！</h3>
+
+<p>咳咳咳，这个回合我没有参与，等我下班赶到时，胡总和阿朱已经把车装好了，我在打了个电话给WQ后，上车坐得很是淡定，心中暗爽不已。</p>
+
+<h3>第三回合，上楼！！！</h3>
+
+<p>我们吐血了，因为我们租的是6楼，而且没有电梯，当我们把最后的一箱子书搬到楼上，心情是复杂的，身上是光滑的。值得一提的是，由于我没有赶上装车大会战，所以这个时候，我还是一个生力军，发挥了一个年轻男大学毕业生应该发挥的积极带头模范作用……（谁扔的砖头） 最后，大家趴在楼梯扶手上决定暂不收拾屋子了，第一时间找床睡之。</p>
+
+<h3>总结</h3>
+
+<p>这次搬家，历时10几个小时，横跨3天时间，是一次团结的搬家，是一次胜利的搬家，虽然在过程中出现了种种问题，产生种种困难，但是，我们三个人搬成功啦，这是我们的胜利，是人民的胜利，谢谢国家！</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2">
+		<h1 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2010-07-06T22:19:09+08:00" pubdate data-updated="true">Jul 6<span>th</span>, 2010</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://www.zhangabc.com/blog/2010/07/06/zhongyong/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/吐槽不断/"><span class="badge">吐槽不断</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10">
+      <h1 class="link"><a href="/blog/2010/07/06/zhongyong/">初读中庸</a></h1>
+      <p>本来以为，像《中庸》这样的书，都应该丢到鲁迅笔下的“故纸堆”里。前一阵，不知道大脑里哪根筋搭错了弦，或者说终于有一根筋搭对了弦，我买了《中庸》这本书，注解很精彩，是朱子的。</p>
+
+<p>读了几天，发现其实几百字甚至二三百字的小短文，竟如此难以“理解”，这里不是古文的阅读障碍，而是其中的道理，的确看起来简单而又博大。</p>
+
+<p>从小到大，身边的人总是说我偏激，自己一直不觉得，直到读了《中庸》，突然很后悔，这本书，我应该在十年前读，然后在最近的十年里体会。</p>
+
+<p>第一章，天命。喜怒哀乐未发谓之中，发而皆中节谓之和。  唉，狂喜，惨悲，暴怒，……，怎么能不偏激？</p>
+
+<p>第十章，问强。回想过去的生活，自己的确是要强的人，有时候甚至玩游戏也非胜利不可，想来真是，而真正的强，只有四个字，“和而不流”，想想都感觉汗颜。</p>
+
+<p>咦？其他的章节呢？有的看了，还没能领悟，有的还没来得及看，顺手记之，权当草纸一张，有何不可？何必为赋新词而强吟，为写博客而催熟？</p>
+
+<p>人生如梦，际遇似云，悠然而来，自在而行，岂不快哉！</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+  
+  <div class="pagination">
+    
+
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
+  Copyright &copy; 2013 - Er.Z -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
+</p>
+
+
+        </footer>
+      </div>
+    </div>
+  </div>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhanger';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

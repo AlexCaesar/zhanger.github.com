@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mobile | Er.z]]></title>
+  <link href="http://www.zhangabc.com/blog/categories/mobile/atom.xml" rel="self"/>
+  <link href="http://www.zhangabc.com/"/>
+  <updated>2013-08-04T05:03:52+08:00</updated>
+  <id>http://www.zhangabc.com/</id>
+  <author>
+    <name><![CDATA[Er.Z]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Autolayout in iOS]]></title>
+    <link href="http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios/"/>
+    <updated>2013-08-03T00:00:00+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios</id>
+    <content type="html"><![CDATA[<h2>Autolayout的优势</h2>
+
+<p>在autolayout之前，一般会使用frame来定位视图中的元素。</p>
+
+<blockquote><p>frame是决定视图位置与宽高的属性，其值为CGRect对象, 可以用下面的方法来定义。
+CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
+
+<p>CGRect对象定义中的四个参数为 横坐标、纵坐标、宽、高。
+把CGRect对象赋值并设置到UIView的frame属性，就可以实现视图的大小及位置的定义。
+理论上这种方法是可以解决所有的问题，不过在实际操作中，有两种情况使用frame是非常不方便的：</p>
+
+<ol>
+<li>设备翻转需要视图位置做出相应的调整；</li>
+<li>可能发生内部元素位置变化的复用视图，如下图中的tableViewCell</li>
+</ol>
+
+
+<p><img src="http://farm6.staticflickr.com/5347/9431737148_10e116c3bf_o.png" alt="列表" /></p>
+
+<p>上面这两种情形出现时，一般要写大量的定位计算代码，而且升级比较麻烦，于是出现了Autolayout来改善frame计算工作过繁重的问题；</p>
+
+<h2>Autolayout原理</h2>
+
+<p><img src="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Art/windowlayers.jpg" alt="UIView" />
+【图片来自developer.apple.com】</p>
+
+<p>iOS的视图是用tree来组织的，每个视图都有其父视图，根节点为Window对象。
+这样就可以把相对关系划分在一定范围内，同时使用父子、兄弟的关系来组织视图。</p>
+
+<h2>使用Autolayout</h2>
+
+<p>Autolayout的使用是比较方便的，主要是生成NSLayoutConstraint对象，然后把constraint加到父视图就可以了。</p>
+
+<h3>例一</h3>
+
+<p><img src="http://farm6.staticflickr.com/5444/9429251493_8a9958c5b1_o.png" alt="demo1" /></p>
+
+<p>当设备进行翻转时，方块的位置和大小随之发生了变化，而这种变化，如果使用frame来进行计算的话，相对比较麻烦；而使用autolayout,代码要简单一些：
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>UIView * A = [[UIView alloc] init];&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;pre>&lt;code>UIView * B = [[UIView alloc] init];
+</span><span class='line'>A.translatesAutoresizingMaskIntoConstraints = NO;
+</span><span class='line'>B.translatesAutoresizingMaskIntoConstraints = NO;
+</span><span class='line'>A.backgroundColor =[UIColor purpleColor];
+</span><span class='line'>B.backgroundColor =[UIColor orangeColor];
+</span><span class='line'>[self.view addSubview:A];
+</span><span class='line'>[self.view addSubview:B];
+</span><span class='line'>
+</span><span class='line'>UIView * rootView = self.view;
+</span><span class='line'>
+</span><span class='line'>NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(A, B, rootView);
+</span><span class='line'>NSArray *verticalConstraints   = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[A(80)]-10-[B(80)]"
+</span><span class='line'>                                                                         options:0 metrics:nil
+</span><span class='line'>                                                                           views:viewsDictionary];
+</span><span class='line'>NSArray *horizontalAConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[A]-10-|"
+</span><span class='line'>                                                                         options:0
+</span><span class='line'>                                                                         metrics:nil
+</span><span class='line'>                                                                           views:viewsDictionary];
+</span><span class='line'>NSArray *horizontalBConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[B]-10-|"
+</span><span class='line'>                                                                         options:0
+</span><span class='line'>                                                                         metrics:nil
+</span><span class='line'>                                                                           views:viewsDictionary];
+</span><span class='line'>
+</span><span class='line'>[self.view addConstraints:verticalConstraints];
+</span><span class='line'>[self.view addConstraints:horizontalAConstraints];
+</span><span class='line'>[self.view addConstraints:horizontalBConstraints];</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
+
+<h1>to be continue…</h1>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Phonegap超级浅尝]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/02/28/phonegap-test/"/>
+    <updated>2012-02-28T01:50:50+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/02/28/phonegap-test</id>
+    <content type="html"><![CDATA[<p>前阵子听 <a href="http://www.startfeel.com/">@leiyi同学</a> 聊到可以用PhoneGap来搞移动应用，回家做了功课，发现这货相当强大，可以使用HTML+JS+CSS来写出适用于ios/andorid/...等等平台的应用，正如它网站的宣传图：</p>
+
+<p><img src="http://pemsys.duapp.com/blog/phonegap-test.png" alt="官方广告^_^" /></p>
+
+<p>然后我决定试用一下，费了18牛72虎之力终于下好了种种SDK（唉，家里的网速跟公司真是天上地下）… 最后小试了一把“Hello World”。</p>
+
+<p>实现相当简单，跟着官方的 <a href="http://phonegap.com/start">Get Started Guide</a> 基本上完全不用太用力就可以在模拟器中完成。顺手记一句解决中文乱码问题…跟普通网页一样，文件编码与声明一致就OK。</p>
+
+<p>接着去看phonGap的官方API，看了一些特效以及功能的实现，记几个想法：</p>
+
+<ul>
+<li><p>跨平台很帅，基本上真的做到了为一个平台编写应用，代码基本不更改的情况下搬到其他平台去。而代价就是显示效果和功能的削弱，ios可以做到1、3、5、7 ， android可以做到2、3、4、5 ， 那么phoneGap就只能做到3、5 ;</p></li>
+<li><p>可以用js来控制界面元素，添加事件，调用资源; 相信这点一定吸引了很多人，不过，其实用java 也是一样，其实学习一种新的语法可能并不困难，而且有时新手开跑车，还真不一定就慢过职业自行车手，所以感觉与其用C基础上的JAVA中虚拟出来的JS环境来做这些事情，还真不如脱去一层，直接用JAVA语法来搞;</p></li>
+<li><p>用CSS来进行界面布局很爽，不得不说，这个爽是来自于学习成本的降低，原生的布局方式是需要学习和理解的，其实花点时间学习和理解一下之后，同样可以搞掂，很可能还而且会更好，原因同上;</p></li>
+</ul>
+
+
+<p>最后，如果只是写一个信息类的，或者展示类的东东，又灰常熟悉js/css, 完全对java无爱，phoneGap 绝对是一把利器; 但如果你写的东西，对原生动画有比较大的需求，而且对原生环境比较有爱,那还是用object-C写ios吧。。。</p>
+]]></content>
+  </entry>
+  
+</feed>

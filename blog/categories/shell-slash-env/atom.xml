@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: SHELL/ENV | Er.z]]></title>
+  <link href="http://www.zhangabc.com/blog/categories/shell-slash-env/atom.xml" rel="self"/>
+  <link href="http://www.zhangabc.com/"/>
+  <updated>2013-08-04T05:03:52+08:00</updated>
+  <id>http://www.zhangabc.com/</id>
+  <author>
+    <name><![CDATA[Er.Z]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[VIM中换行替换之迷]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell/"/>
+    <updated>2011-08-08T17:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell</id>
+    <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory
+我们在shell下生成一个test文件：</p>
+
+<pre><code>$ echo -e "i\rlove\rWQ." &gt;test
+</code></pre>
+
+<p>然后，用vim打开，果然是</p>
+
+<pre><code>I^Mlove^MWQ. 
+</code></pre>
+
+<p>这时执行： :%s/\r/\r/g 发现文件正常了。
+但是这里面有一个不正常，:%s/\r/\r/g 这个命令是把\r替换成了\r , 应该什么都没变化,怎么就把文件的换行符给替换了呢？</p>
+
+<p>仔细检查了一下，发现这个问题还要从各个系统不同的换行符开始，下面的这个表格大家比较熟悉了：</p>
+
+<table>
+<thead>
+<tr>
+<th> </th>
+<th> windows/dos </th>
+<th> unix </th>
+<th> mac</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>换行符  　　  </td>
+<td> CRLF      </td>
+<td>     LF </td>
+<td>　　 CR</td>
+</tr>
+<tr>
+<td>在SHELL中的表示 </td>
+<td> \r\n  　 </td>
+<td>      \n </td>
+<td>　\r</td>
+</tr>
+<tr>
+<td>16进制符    　　</td>
+<td> 0d0a  　 </td>
+<td>      0a </td>
+<td> 　0d</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>:%s/\r/\r/g 这个命令中，第一个\r与第二个\r的意义是可能不相同的；
+第一个\r代表 0d ,也就是CR；
+而第二个\r，是VIM自行根据fileformat内置变量判断决定的，见下表：</p>
+
+<table>
+<thead>
+<tr>
+<th>　　　　　      </th>
+<th>    　　　 \n  </th>
+<th>　　 \r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:set ff=dos 　　</td>
+<td>   　　　 00   </td>
+<td> 　 0d0a(\n\r)</td>
+</tr>
+<tr>
+<td>:set ff=unix 　 </td>
+<td>   　　　 00   </td>
+<td> 　 0a(\n)</td>
+</tr>
+<tr>
+<td>:set ff=mac 　　</td>
+<td>   　　　 00   </td>
+<td> 　 0d(\r)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>OK,现在就可以解释上面的 :%s/\r/\r/g 为什么会把 0d变成0a了。</p>
+
+<p>另外还有两个小Tip:</p>
+
+<ul>
+<li>根据fileformat的不同，vim会自动在文件的最未尾添加一个换行符，除非启动时vim -b xxx , 同时还要开启 set noeol才行。</li>
+<li>任何情形下，VIM中的\n都是00, 在VIM中会显示为<sup>@</sup></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

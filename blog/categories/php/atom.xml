@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: php | Er.z]]></title>
+  <link href="http://www.zhangabc.com/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://www.zhangabc.com/"/>
+  <updated>2013-08-04T05:03:52+08:00</updated>
+  <id>http://www.zhangabc.com/</id>
+  <author>
+    <name><![CDATA[Er.Z]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[得到PHP脚本opcodes及其处理函数的小工具]]></title>
+    <link href="http://www.zhangabc.com/blog/2012/09/17/opcode-dump/"/>
+    <updated>2012-09-17T21:02:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2012/09/17/opcode-dump</id>
+    <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
+
+<h3>打印出opcode的处理函数</h3>
+
+<p>一年前写了<a href="http://zhangabc.com/2011/08/27/find-opcodes-to-implements/">由opcodes找到其处理函数的方法</a>, 然后很长一段时间之内，
+都使用vld输出opcodes，再去人肉寻找其处理函数。</p>
+
+<p>后来，发现对于opcodes, 很多人都实现了输出，但对于opcode的处理函数，则没有关注;</p>
+
+<p>而我们在分析PHP脚本代码到opcodes，再到具体的C实现的过程，opcode的处理是比较重要的一个环节；</p>
+
+<p>于是升级了鸟哥的opcode dumper，对opcode handler进行了输出：</p>
+
+<p>如图：
+<img src="http://ww3.sinaimg.cn/large/a74ecc4cjw1dwzbmmlzi9j.jpg" alt="小截图" /></p>
+
+<p>实现原理，使用opcode -> opcode_handler的转化公式进行转化，(只支持CALL的分发方式):</p>
+
+<p><div>
+  <pre><code class='c'>code * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5 + zend_vm_decode[op-&gt;op2.op_type];</code></pre>
+</div>
+</p>
+
+<p>看了前面的 <a href="http://zhangabc.com/2011/08/27/find-opcodes-to-implements/">由opcodes找到其处理函数的方法</a>, 比较容易就能在zend_init_opcodes_handlers数组中遍历到需要导出的函数名。</p>
+
+<h3>关于源码构建</h3>
+
+<p>源码地址:    <a href="https://github.com/laruence/opcodesdumper">https://github.com/laruence/opcodesdumper</a></p>
+
+<p>Makefile版源码： <a href="https://github.com/zhanger/opcodesdumper">https://github.com/zhanger/opcodesdumper</a></p>
+
+<p>由于鸟哥使用比较“高级”的autotools来自动构建，而我认为这么一个小工具，Makefile足够了。
+于是还有一个Makefile版本用于自用(我又土了么)。</p>
+
+<h3>其他实现</h3>
+
+<p>你也有写这东西吗？（话外音，有人没写过么）</p>
+
+<h4>VLD</h4>
+
+<p>git://github.com/derickr/vld.git</p>
+
+<h4>网页在线版的opcode dumper :</h4>
+
+<p>http://supercompiler.com/app/opcode_dumper</p>
+
+<p>github:https://github.com/ericzhang-cn/opdumper</p>
+
+<h3>TODO</h3>
+
+<!--
+目前处理函数的查找还要依赖外部的文本文件 opcodes_handlers_php5_310 , 需要添加其他版本的处理函数文本，
+同时，代码要实现对PHP版本的自动检测 
+-->
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[PHP扩展]获取$_SERVER变量的问题及解决]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals/"/>
+    <updated>2011-08-28T03:02:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals</id>
+    <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
+
+<h2>背景</h2>
+
+<p>本文适用于希望在PHP扩展中获取到 $<em>SERVER/$</em>POST/$<em>GET/$</em>REQUEST/..的情形。</p>
+
+<h2>经过</h2>
+
+<p>想在PHP扩展中获取$_SERVER['SCRIPT_FILENAME']，于是有如下代码：</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;PHP_FUNCTION(xx_get_path)
+{   
+    HashTable *_SERVER;
+    zval **stuff;
+    char *path_info;
+
+    _SERVER = Z_ARRVAL_P(PG(http_globals)[TRACK_VARS_SERVER]);
+     if (SUCCESS == zend_hash_find(_SERVER, 
+         &quot;SCRIPT_FILENAME&quot;, sizeof(&quot;SCRIPT_FILENAME&quot;), 
+          (void **) &amp;amp;stuff)) {
+         path_info = Z_STRVAL_PP(stuff);
+         RETVAL_STRING(path_info, 1); 
+     }   
+
+}   
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<h2>出现问题</h2>
+
+<p>在PHP中我这样使用这样的代码来调用：</p>
+
+<p><div>
+  <pre><code class='php'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php 
+echo xx_get_path();
+?&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<p>结果 ：在浏览器中访问时，Apache报：child pid 52540 exit signal Segmentation fault (11)
+在cli中，直接php index.php是正常的。
+而且，如果改成这样子，浏览器中也正常了。</p>
+
+<p><div>
+  <pre><code class='php'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php 
+$_SERVER;   //这可也可以放到最后; 
+echo xx_get_path();
+?&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<h2>分析</h2>
+
+<p>这里最让人费解就是在PHP代码中放一个$<em>SERVER; 就好了，很显然是这变量发生了什么 。。。。
+没错，就是它，经过TIPI讨论组数秒的讨论，找到了这个：
+http://www.php.net/manual/en/ini.core.php#ini.register-globals
+原来</em>SERVER系列变量是可以访问时才生成了，于是在扩展中直接zend_hash_find就找不到了。</p>
+
+<h2>解决办法</h2>
+
+<p>既然原因是没有自动注册_SERVER ，于是可以加以下代码暴力注册之。</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;zend_bool jit_init = (PG(auto_globals_jit) &amp;amp;&amp;amp; !PG(register_globals) &amp;amp;&amp;amp; 
+                !PG(register_long_arrays));
+if (jit_init) { 
+    zend_is_auto_global(ZEND_STRL(&quot;_SERVER&quot;) TSRMLS_CC);
+}   
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<h2>附：另一种方法</h2>
+
+<p>还有另一种方法来获取$_SERVER['SCRIPT_NAME'],原理大同小异，不解释:</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;PHP_FUNCTION(peblog_get_html)
+{   
+
+    zval **SERVER   = NULL;
+    zval **ret      = NULL;
+
+
+   zend_bool jit_init = (PG(auto_globals_jit) &amp;amp;&amp;amp; !PG(register_globals) 
+                     &amp;amp;&amp;amp; !PG(register_long_arrays));
+    if (jit_init) { 
+        zend_is_auto_global(ZEND_STRL(&quot;_SERVER&quot;) TSRMLS_CC);
+    }   
+
+    (void)zend_hash_find(&amp;amp;EG(symbol_table), 
+                 ZEND_STRS(&quot;_SERVER&quot;), (void **)&amp;amp;SERVER);
+    if (zend_hash_find(Z_ARRVAL_PP(SERVER), 
+           ZEND_STRS(&quot;SCRIPT_FILENAME&quot;),
+            (void **)&amp;amp;ret) == FAILURE )
+    {
+        RETVAL_STRING(&quot;No SCRIPT_FILENAME. &quot;, 1);
+    }
+    else
+    {
+        char *str = NULL;
+        str     = estrdup(Z_STRVAL_P(*ret));
+
+        RETVAL_STRING(str, 1);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[由opcodes找到其处理函数的方法]]></title>
+    <link href="http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements/"/>
+    <updated>2011-08-28T03:02:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements</id>
+    <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
+
+<h2>Debug法：</h2>
+
+<p>在学习研究PHP内核的过程中，经常通过opcode来查看代码的执行顺序，这些opcode会存储于一个数组op_array中，然后在zend_vm_execute.h中的execute函数中使用以下代码来依次执行：</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; ZEND_API void execute(zend_op_array *op_array TSRMLS_DC)
+ {
+ ...
+ zend_vm_enter:
+ ....
+ if ((ret = EX(opline)-&amp;gt;handler(execute_data TSRMLS_CC)) &amp;gt; 0) {
+             switch (ret) {
+                 case 1:
+                     EG(in_execution) = original_in_execution;
+                     return;
+                 case 2:
+                     op_array = EG(active_op_array);
+                     goto zend_vm_enter;
+                 case 3:
+                     execute_data = EG(current_execute_data);
+                 default:
+                     break;
+             }
+ ｝
+    ...
+ }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<p>在执行的过程中，EX(opline)->handler（展开后为 *execute_data->opline->handler）存储了处理当前操作的函数名称。如果这时在gdb中 用p命令，就可以打印出类似这样的结果：</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; (gdb) p *execute_data-&amp;gt;opline-&amp;gt;handler
+ $1 = {int (zend_execute_data *)} 0x10041f394 &amp;lt;ZEND_NOP_SPEC_HANDLER&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+
+就可以知道当前要执行的处理函数了，这种是debug的方法。</p>
+
+<h2>计算法：</h2>
+
+<p>那么，在PHP内核中是如何将一个opcode转化为函数的呢？ 在PHP内部是使用zend_vm_get_opcode_handler()函数来进行转化的。</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; static opcode_handler_t
+ zend_vm_get_opcode_handler(zend_uchar opcode, zend_op* op)
+ {
+         static const int zend_vm_decode[] = {
+             _UNUSED_CODE, /* 0              */
+             _CONST_CODE,  /* 1 = IS_CONST   */
+             _TMP_CODE,    /* 2 = IS_TMP_VAR */
+             _UNUSED_CODE, /* 3              */
+             _VAR_CODE,    /* 4 = IS_VAR     */
+             _UNUSED_CODE, /* 5              */
+             _UNUSED_CODE, /* 6              */
+             _UNUSED_CODE, /* 7              */
+             _UNUSED_CODE, /* 8 = IS_UNUSED  */
+             _UNUSED_CODE, /* 9              */
+             _UNUSED_CODE, /* 10             */
+             _UNUSED_CODE, /* 11             */
+             _UNUSED_CODE, /* 12             */
+             _UNUSED_CODE, /* 13             */
+             _UNUSED_CODE, /* 14             */
+             _UNUSED_CODE, /* 15             */
+             _CV_CODE      /* 16 = IS_CV     */
+         };  
+         return zend_opcode_handlers[
+              opcode * 25 + zend_vm_decode[op-&amp;gt;op1.op_type] * 5
+                      + zend_vm_decode[op-&amp;gt;op2.op_type]];
+                         }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+
+由上面的代码可以看到，opcode到php内部函数的转化是由下面的公式来进行的：</p>
+
+<p><div>
+  <pre><code class='c'>opcode * 25 + zend_vm_decode[op-&gt;op1.op_type] * 5&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;             + zend_vm_decode[op-&amp;gt;op2.op_type]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<p>然后将其计算的数值作为索引到zend_init_opcodes_handlers数组中进行查找。不过，这个数组实在是太大了，有3851个元素，查找和计算都比较麻烦。</p>
+
+<h2>命名查找法：</h2>
+
+<p>上面的两种方法其实都是比较麻烦的，在定位某一opcode的实现执行代码的过程中，都不得不对程序进行执行或者计算中间值。而在追踪的过程中，我发现处理函数名称是有一定规则的。 这里以函数调用的opcode为例，调用某函数的opcode及其对应在php内核中实现的处理函数如下：</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; //函数调用：
+ DO_FCALL  ==&amp;gt;  ZEND_DO_FCALL_SPEC_CONST_HANDLER
+
+ //变量赋值：
+ ASSIGN     =&amp;gt;      ZEND_ASSIGN_SPEC_VAR_CONST_HANDLER
+                    ZEND_ASSIGN_SPEC_VAR_TMP_HANDLER
+                    ZEND_ASSIGN_SPEC_VAR_VAR_HANDLER
+                    ZEND_ASSIGN_SPEC_VAR_CV_HANDLER            
+ //变量加法：
+ ASSIGN_SUB =&amp;gt;   ZEND_ASSIGN_SUB_SPEC_VAR_CONST_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_VAR_TMP_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_VAR_VAR_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_VAR_UNUSED_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_VAR_CV_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_UNUSED_CONST_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_UNUSED_TMP_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_UNUSED_VAR_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_UNUSED_UNUSED_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_UNUSED_CV_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_CV_CONST_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_CV_TMP_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_CV_VAR_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_CV_UNUSED_HANDLER,
+                     ZEND_ASSIGN_SUB_SPEC_CV_CV_HANDLER,
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+
+在上面的命名就会发现，其实处理函数的命名是有以下规律的：</p>
+
+<p><div>
+  <pre><code class='c'>ZEND&lt;em&gt;[opcode]&lt;/em&gt;SPEC&lt;em&gt;(变量类型1)&lt;/em&gt;(变量类型2)_HANDLER</code></pre>
+</div>
+
+这里的变量类型1和变量类型2是可选的，如果同时存在，那就是左值和右值，归纳有下几类： VAR TMP CV UNUSED CONST 可以根据相关的执行场景来判定。</p>
+
+<h2>LOG记录法：</h2>
+
+<p>这种方法是上面计算方法的的升级，就是在zend_vm_get_opcode_handler 方法改写为以下代码：</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; static opcode_handler_t
+ zend_vm_get_opcode_handler(zend_uchar opcode, zend_op* op)
+ {
+         static const int zend_vm_decode[] = {
+             _UNUSED_CODE, /* 0              */
+             _CONST_CODE,  /* 1 = IS_CONST   */
+             _TMP_CODE,    /* 2 = IS_TMP_VAR */
+             _UNUSED_CODE, /* 3              */
+             _VAR_CODE,    /* 4 = IS_VAR     */
+             _UNUSED_CODE, /* 5              */
+             _UNUSED_CODE, /* 6              */
+             _UNUSED_CODE, /* 7              */
+             _UNUSED_CODE, /* 8 = IS_UNUSED  */
+             _UNUSED_CODE, /* 9              */
+             _UNUSED_CODE, /* 10             */
+             _UNUSED_CODE, /* 11             */
+             _UNUSED_CODE, /* 12             */
+             _UNUSED_CODE, /* 13             */
+             _UNUSED_CODE, /* 14             */
+             _UNUSED_CODE, /* 15             */
+             _CV_CODE      /* 16 = IS_CV     */
+         };  
+
+         //很显然，我们把opcode和相对应的写到了/tmp/php.log文件中
+         int op_index;
+         op_index = opcode * 25 + zend_vm_decode[op-&amp;gt;op1.op_type] * 5 + zend_vm_decode[op-&amp;gt;op2.op_type];
+
+         FILE *stream;
+         if((stream = fopen(&quot;/tmp/php.log&quot;, &quot;a+&quot;)) != NULL){
+             fprintf(stream, &quot;opcode: %d , zend_opcode_handlers_index:%d\n&quot;, opcode, op_index);
+         }    
+         fclose(stream);
+
+
+         return zend_opcode_handlers[
+              opcode * 25 + zend_vm_decode[op-&amp;gt;op1.op_type] * 5
+                      + zend_vm_decode[op-&amp;gt;op2.op_type]];
+                         }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+
+然后，就可以在/tmp/php.log文件中生成类似如下结果:</p>
+
+<p><div>
+  <pre><code class='c'>&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;opcode: 38 , zend_opcode_handlers_index:970
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<p>数字38是opcode的，我们可以这里查到： http://php.net/manual/en/internals2.opcodes.list.php
+数字970是topcode_handler_t labels[] 索引，里面对应了处理函数的名称，对应源码文件是：Zend/zend_vm_execute.h （第30077行左右）。 这是一个超大的数组，php5.3.4中有3851个元素，在上面的例子里，看样子我们要数到第970个了，当然，有很多种方法来避免这种无意义的重劳动，你懂的。</p>
+
+<p>经过鸟哥（@laruence)的提醒，本文仅适合于ZendVM分发方式为CALL的情形。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[从opcodes看{$a}与${a}的区别]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array/"/>
+    <updated>2010-11-23T15:11:49+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array</id>
+    <content type="html"><![CDATA[<p>突然用到类似{$a}与${a}这样子的表达式，大约知道两者的区别，用OPCODE来做一个验证，记录如下:</p>
+
+<h3>程序一：</h3>
+
+<p><div>
+  <pre><code class='php'>&amp;lt;?php&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$a = 'abc';
+$abc = 'ok';
+echo ${abc};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;?&gt;</code></pre>
+</div>
+</p>
+
+<h4>opcode ：(点击图片放大)</h4>
+
+<p><img src="http://pemsys.duapp.com/blog/opcode_array_1.jpg" alt="php_zend_return^_^" /></p>
+
+<h3>程序二：</h3>
+
+<p><div>
+  <pre><code class='php'>&amp;lt;?php
+$a = 'abc';
+$abc = 'ok';
+echo {$abc};
+?&gt;</code></pre>
+</div>
+</p>
+
+<h4>opcode ：(点击图片放大)</h4>
+
+<p><img src="http://pemsys.duapp.com/blog/opcode_array_2.jpg" alt="php_zend_return^_^" /></p>
+
+<h3>程序一 ${abc} 解释：</h3>
+
+<p>ASSIGN 就是赋值，所以第一二步，都是赋值的操作，关键是第三步的 FETCH_CONSTANT 。
+FETCH_CONSTANT 是在所有的常量中寻找abc 这个变量(当然没找到)，然后将abc赋值给临时变量~2
+然后FETCH_R取到~2变量名的值，ECHO输出；</p>
+
+<h3>程序二 {$abc} 解释：</h3>
+
+<p>减少了FETCH_CONSTANT的步骤，多了ADD_VAR,这是一个赋值语句。
+由于使用了“{$abc}” 语法，需要另一个临时变量来存储结果。</p>
+
+<h3>结论：</h3>
+
+<p>${abc} 会先去常量中寻求abc，如果有值则替代之，没有，则进行与{$abc}相同的操作；</p>
+
+<p>{$abc} 与 $abc 相同；</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PHP扩展中自定义函数返回值与ZVAL]]></title>
+    <link href="http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval/"/>
+    <updated>2010-11-15T11:21:11+08:00</updated>
+    <id>http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval</id>
+    <content type="html"><![CDATA[<p>如要在PHP扩展中返回一个整数，那是相当的容易滴：<!--more-->
+<div>
+  <pre><code class='c'>PHP_FUNCTION(rv_long)
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;RETURN_LONG(9999);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}</code></pre>
+</div>
+
+也可以写成这样子：</p>
+
+<p><div>
+  <pre><code class='c'>PHP_FUNCTION(rv_long)
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;RETVAL_LONG(9999);
+return;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}</code></pre>
+</div>
+
+还可以写成这样子：
+<div>
+  <pre><code class='c'>PHP_FUNCTION(rv_long)
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Z_TYPE_P(return_value) = IS_LONG;
+Z_LVAL_P(return_value) = 9999;
+return;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}</code></pre>
+</div>
+</p>
+
+<p>方法看起来很多么……其实是同一种方法的“渐进版”。</p>
+
+<p>如下图：
+<img src="http://zhangabc.my.phpcloud.com/wp-content/uploads/2010/11/return_value.png" alt="php_zend_return^_^" /></p>
+
+<p>OK,本质是搞了个叫returen_value的zval,……至于zval , 是PHP的C源代码级别的最核心的结构。</p>
+
+<p>PHP所有类型的变量都是以zval这个结构体来存储。PHP在源代码级别提供了大量用于操作zval变量的宏。</p>
+
+<p>上面是整数的例子，其他类型也类似：
+<div>
+  <pre><code class='c'>ZVAL_NULL(return_value)
+RETVAL_NULL()&lt;/p&gt;
+
+&lt;p&gt;ZVAL_BOOL(return_value, bval)
+RETVAL_BOOL(bval)&lt;/p&gt;
+
+&lt;p&gt;ZVAL_TRUE(return_value)
+RETVAL_TRUE&lt;/p&gt;
+
+&lt;p&gt;ZVAL_FALSE(return_value)
+RETVAL_FALSE&lt;/p&gt;
+
+&lt;p&gt;ZVAL_LONG(return_value, lval)
+RETVAL_LONG(lval)&lt;/p&gt;
+
+&lt;p&gt;ZVAL_DOUBLE(return_value, dval)
+RETVAL_DOUBLE(dval)&lt;/p&gt;
+
+&lt;p&gt;ZVAL_STRING(return_value, str, dup)
+RETVAL_STRING(str, dup)&lt;/p&gt;
+
+&lt;p&gt;ZVAL_STRINGL(return_value, str, len, dup)
+RETVAL_STRINGL(str,len,dup)&lt;/p&gt;
+
+&lt;p&gt;ZVAL_RESOURCE(return_value, rval)
+RETVAL_RESOURCE(rval)</code></pre>
+</div>
+</p>
+
+<p>不过，引用和数组还是稍有不同的……（未完不续）</p>
+]]></content>
+  </entry>
+  
+</feed>
