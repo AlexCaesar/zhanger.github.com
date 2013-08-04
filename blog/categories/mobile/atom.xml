@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mobile | Er.z]]></title>
   <link href="http://zhanger.github.io/blog/categories/mobile/atom.xml" rel="self"/>
   <link href="http://zhanger.github.io/"/>
-  <updated>2013-08-04T19:49:54+08:00</updated>
+  <updated>2013-08-04T20:33:51+08:00</updated>
   <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
@@ -35,7 +35,7 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 </ol>
 
 
-<p><img src="http://farm6.staticflickr.com/5347/9431737148_10e116c3bf_o.png" alt="列表" /></p>
+<p><a href="http://www.flickr.com/photos/99843428@N08/9431737148/" title="Flickr 上 olfephg 的 9430340212_029a9476b3_o"><img src="http://farm6.staticflickr.com/5347/9431737148_10e116c3bf_o.png" width="300" height="227" alt="9430340212_029a9476b3_o"></a></p>
 
 <p>上面这两种情形出现时，一般要写大量的定位计算代码，而且升级比较麻烦，于是出现了Autolayout来改善frame计算工作过繁重的问题；</p>
 
