@@ -4,7 +4,7 @@
   <title><![CDATA[Er.z]]></title>
   <link href="http://zhanger.github.io/atom.xml" rel="self"/>
   <link href="http://zhanger.github.io/"/>
-  <updated>2013-08-04T20:41:22+08:00</updated>
+  <updated>2013-08-04T21:13:38+08:00</updated>
   <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
@@ -18,7 +18,10 @@
     <link href="http://zhanger.github.io/blog/2013/08/03/auto-layout-in-ios/"/>
     <updated>2013-08-03T00:00:00+08:00</updated>
     <id>http://zhanger.github.io/blog/2013/08/03/auto-layout-in-ios</id>
-    <content type="html"><![CDATA[<h2>Autolayout的优势</h2>
+    <content type="html"><![CDATA[<p>最近终于放弃了使用frame做视图的定位，改用storyboard + Autolayout + segue 来折腾视图的排列、定位、转场动画，感觉iOS开发越来越方便了。
+本文总结一下关于autolayout的学习和使用。</p>
+
+<h2>Autolayout的优势</h2>
 
 <p>在autolayout之前，一般会使用frame来定位视图中的元素。</p>
 
@@ -35,7 +38,8 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 </ol>
 
 
-<p><a href="http://www.flickr.com/photos/99843428@N08/9433535483/" title="Flickr 上 olfephg 的 autolayout"><img src="http://farm3.staticflickr.com/2881/9433535483_29da9fb770_o.png" width="301" height="408" alt="autolayout"></a></p>
+<p><a href="http://www.flickr.com/photos/99843428@N08/9433535483/" title="Flickr 上 olfephg 的 autolayout"><img src="http://farm3.staticflickr.com/2881/9433535483_29da9fb770_o.png" width="301" height="408" alt="autolayout"></a>
+(截图来自写的一款小应用《cnBeta X 非官方IT新闻阅读器》，有兴趣可以去app store上下载）</p>
 
 <p>上面这两种情形出现时，一般要写大量的定位计算代码，而且升级比较麻烦，于是出现了Autolayout来改善frame计算工作过繁重的问题；</p>
 
