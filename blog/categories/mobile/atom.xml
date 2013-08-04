@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mobile | Er.z]]></title>
   <link href="http://zhanger.github.io/blog/categories/mobile/atom.xml" rel="self"/>
   <link href="http://zhanger.github.io/"/>
-  <updated>2013-08-04T21:21:40+08:00</updated>
+  <updated>2013-08-04T21:51:28+08:00</updated>
   <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
@@ -60,7 +60,7 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 <p><img src="http://farm6.staticflickr.com/5444/9429251493_8a9958c5b1_o.png" alt="demo1" /></p>
 
 <p>当设备进行翻转时，方块的位置和大小随之发生了变化，而这种变化，如果使用frame来进行计算的话，相对比较麻烦；而使用autolayout,代码要简单一些：
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -88,35 +88,43 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>UIView * A = [[UIView alloc] init];&lt;/p>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>UIView * B = [[UIView alloc] init];
-</span><span class='line'>A.translatesAutoresizingMaskIntoConstraints = NO;
-</span><span class='line'>B.translatesAutoresizingMaskIntoConstraints = NO;
-</span><span class='line'>A.backgroundColor =[UIColor purpleColor];
-</span><span class='line'>B.backgroundColor =[UIColor orangeColor];
-</span><span class='line'>[self.view addSubview:A];
-</span><span class='line'>[self.view addSubview:B];
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">UIView</span> <span class="o">*</span> <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="n">UIView</span> <span class="o">*</span> <span class="n">B</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="n">A</span><span class="p">.</span><span class="n">translatesAutoresizingMaskIntoConstraints</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'><span class="n">B</span><span class="p">.</span><span class="n">translatesAutoresizingMaskIntoConstraints</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'><span class="n">A</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span><span class="p">[</span><span class="n">UIColor</span> <span class="n">purpleColor</span><span class="p">];</span>
+</span><span class='line'><span class="n">B</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span><span class="p">[</span><span class="n">UIColor</span> <span class="n">orangeColor</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">A</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">B</span><span class="p">];</span>
 </span><span class='line'>
-</span><span class='line'>UIView * rootView = self.view;
+</span><span class='line'><span class="n">UIView</span> <span class="o">*</span> <span class="n">rootView</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(A, B, rootView);
-</span><span class='line'>NSArray *verticalConstraints   = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[A(80)]-10-[B(80)]"
-</span><span class='line'>                                                                         options:0 metrics:nil
-</span><span class='line'>                                                                           views:viewsDictionary];
-</span><span class='line'>NSArray *horizontalAConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[A]-10-|"
-</span><span class='line'>                                                                         options:0
-</span><span class='line'>                                                                         metrics:nil
-</span><span class='line'>                                                                           views:viewsDictionary];
-</span><span class='line'>NSArray *horizontalBConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[B]-10-|"
-</span><span class='line'>                                                                         options:0
-</span><span class='line'>                                                                         metrics:nil
-</span><span class='line'>                                                                           views:viewsDictionary];
+</span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">viewsDictionary</span> <span class="o">=</span> <span class="n">NSDictionaryOfVariableBindings</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">rootView</span><span class="p">);</span>
+</span><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">verticalConstraints</span>   <span class="o">=</span> <span class="p">[</span><span class="n">NSLayoutConstraint</span> <span class="nl">constraintsWithVisualFormat:</span><span class="s">@&quot;V:|-50-[A(80)]-10-[B(80)]&quot;</span>
+</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span> <span class="nl">metrics:</span><span class="nb">nil</span>
+</span><span class='line'>                                                                           <span class="nl">views:</span><span class="n">viewsDictionary</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">horizontalAConstraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSLayoutConstraint</span> <span class="nl">constraintsWithVisualFormat:</span><span class="s">@&quot;H:|-10-[A]-10-|&quot;</span>
+</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span>
+</span><span class='line'>                                                                         <span class="nl">metrics:</span><span class="nb">nil</span>
+</span><span class='line'>                                                                           <span class="nl">views:</span><span class="n">viewsDictionary</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">horizontalBConstraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSLayoutConstraint</span> <span class="nl">constraintsWithVisualFormat:</span><span class="s">@&quot;H:|-10-[B]-10-|&quot;</span>
+</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span>
+</span><span class='line'>                                                                         <span class="nl">metrics:</span><span class="nb">nil</span>
+</span><span class='line'>                                                                           <span class="nl">views:</span><span class="n">viewsDictionary</span><span class="p">];</span>
 </span><span class='line'>
-</span><span class='line'>[self.view addConstraints:verticalConstraints];
-</span><span class='line'>[self.view addConstraints:horizontalAConstraints];
-</span><span class='line'>[self.view addConstraints:horizontalBConstraints];</span></code></pre></td></tr></table></div></figure></notextile></div>
-</code></pre>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addConstraints:</span><span class="n">verticalConstraints</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addConstraints:</span><span class="n">horizontalAConstraints</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addConstraints:</span><span class="n">horizontalBConstraints</span><span class="p">];</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h1>to be continue…</h1>
 ]]></content>
