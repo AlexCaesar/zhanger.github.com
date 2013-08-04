@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: 吐槽不断 | Er.z]]></title>
-  <link href="http://www.zhangabc.com/blog/categories/tu-cao-bu-duan/atom.xml" rel="self"/>
-  <link href="http://www.zhangabc.com/"/>
-  <updated>2013-08-04T05:03:52+08:00</updated>
-  <id>http://www.zhangabc.com/</id>
+  <link href="http://zhanger.github.io/blog/categories/tu-cao-bu-duan/atom.xml" rel="self"/>
+  <link href="http://zhanger.github.io/"/>
+  <updated>2013-08-04T19:44:00+08:00</updated>
+  <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[心中的猛虎--记Life of PI]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/12/03/lifeofpi/"/>
+    <link href="http://zhanger.github.io/blog/2012/12/03/lifeofpi/"/>
     <updated>2012-12-03T12:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/12/03/lifeofpi</id>
+    <id>http://zhanger.github.io/blog/2012/12/03/lifeofpi</id>
     <content type="html"><![CDATA[<p>传说人生是一个不断自问“什么是人生”的过程，在不同的年龄、经历、环境、甚至因为遇到不同的人或者天气，会有完全不同的答案。
 于是，有人说关于人生的讨论都是屁话。
 就不断变老的自己而言，少年时曾在书中苦苦寻找必须不断学习和认知这个世界是否必要的终极答案，也悲剧的发现，有些事情，你一旦知道了，便完全无法忘却，从此你便成了另外一个人。
@@ -67,9 +67,9 @@
   
   <entry>
     <title type="html"><![CDATA[暴雪的迪亚不罗三]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/07/30/diablo-3/"/>
+    <link href="http://zhanger.github.io/blog/2012/07/30/diablo-3/"/>
     <updated>2012-07-30T23:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/07/30/diablo-3</id>
+    <id>http://zhanger.github.io/blog/2012/07/30/diablo-3</id>
     <content type="html"><![CDATA[<p>能在5秒内就让人全身心投入的事情，游戏绝对算得上其中一个。不过我以前总是下载10几G的游戏，安装，看过场动画，再删掉。可能很多游戏用心玩就会有乐趣，但能给自己一个理由，说服自己舍得付出时间成本，本身也是一件非常不容易的事情。</p>
 
 <h3>蛋疼的开始</h3>
@@ -117,9 +117,9 @@
   
   <entry>
     <title type="html"><![CDATA[再见，WordPres哥]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/04/27/goodbye-wordpress/"/>
+    <link href="http://zhanger.github.io/blog/2012/04/27/goodbye-wordpress/"/>
     <updated>2012-04-27T00:00:00+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/04/27/goodbye-wordpress</id>
+    <id>http://zhanger.github.io/blog/2012/04/27/goodbye-wordpress</id>
     <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
 
 <p>世间总有美好的事物渐渐变质，或许，它们没变，我们变了。</p>
@@ -142,9 +142,9 @@
   
   <entry>
     <title type="html"><![CDATA[某个周未的随想（关于电子产品）]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele/"/>
+    <link href="http://zhanger.github.io/blog/2011/06/26/thinking-for-ele/"/>
     <updated>2011-06-26T04:26:09+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele</id>
+    <id>http://zhanger.github.io/blog/2011/06/26/thinking-for-ele</id>
     <content type="html"><![CDATA[<p>这是第一次用OmmWriter写东西，本来就知道，这个软件是一个非常有意境的软件，而真正用它来写点什么的时候，才感觉到一种平静，扑面而来，在轻轻的音乐声中，每次敲击的打字声……让人心生静谧。</p>
 
 <p>写点什么呢，发现自己最近的生活中充斥了电子产品、还有编程。终于有了心情，整理一下。</p>
@@ -173,9 +173,9 @@
   
   <entry>
     <title type="html"><![CDATA[你得允许男人在工作时找点乐趣]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/09/05/find-fun/"/>
+    <link href="http://zhanger.github.io/blog/2010/09/05/find-fun/"/>
     <updated>2010-09-05T05:19:09+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/09/05/find-fun</id>
+    <id>http://zhanger.github.io/blog/2010/09/05/find-fun</id>
     <content type="html"><![CDATA[<h3>“你得充许男人在工作时找点乐趣……”</h3>
 
 <p>这句话星际2里一个战士在进行战斗时的台词。这句台词从某种意义上折射出暴雪团队在制作游戏时的“游戏心态”。 最近还看了一个记录片，名字叫《皮克斯的世界》，描述的是皮克斯的人是如何进行制作动画的工作，那个总导演说：当我第一次了解动画是如何制作出来的时候，我深深的爱上了这个事情，我决定我要用这个工作来养活自己。</p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: 足迹 | Er.z]]></title>
-  <link href="http://www.zhangabc.com/blog/categories/zu-ji/atom.xml" rel="self"/>
-  <link href="http://www.zhangabc.com/"/>
-  <updated>2013-08-04T05:03:52+08:00</updated>
-  <id>http://www.zhangabc.com/</id>
+  <link href="http://zhanger.github.io/blog/categories/zu-ji/atom.xml" rel="self"/>
+  <link href="http://zhanger.github.io/"/>
+  <updated>2013-08-04T19:44:00+08:00</updated>
+  <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[时间管理]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/11/13/time-management/"/>
+    <link href="http://zhanger.github.io/blog/2012/11/13/time-management/"/>
     <updated>2012-11-13T23:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/11/13/time-management</id>
+    <id>http://zhanger.github.io/blog/2012/11/13/time-management</id>
     <content type="html"><![CDATA[<p>今天参加了公司的一个培训，关于时间管理的，总结备忘：</p>
 
 <h3>什么是时间管理</h3>

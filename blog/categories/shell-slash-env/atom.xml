@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: SHELL/ENV | Er.z]]></title>
-  <link href="http://www.zhangabc.com/blog/categories/shell-slash-env/atom.xml" rel="self"/>
-  <link href="http://www.zhangabc.com/"/>
-  <updated>2013-08-04T05:03:52+08:00</updated>
-  <id>http://www.zhangabc.com/</id>
+  <link href="http://zhanger.github.io/blog/categories/shell-slash-env/atom.xml" rel="self"/>
+  <link href="http://zhanger.github.io/"/>
+  <updated>2013-08-04T19:44:00+08:00</updated>
+  <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[VIM中换行替换之迷]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell/"/>
+    <link href="http://zhanger.github.io/blog/2011/08/08/vim-cr-lf-shell/"/>
     <updated>2011-08-08T17:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell</id>
+    <id>http://zhanger.github.io/blog/2011/08/08/vim-cr-lf-shell</id>
     <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory
 我们在shell下生成一个test文件：</p>
 

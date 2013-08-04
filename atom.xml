@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Er.z]]></title>
-  <link href="http://www.zhangabc.com/atom.xml" rel="self"/>
-  <link href="http://www.zhangabc.com/"/>
-  <updated>2013-08-04T05:03:52+08:00</updated>
-  <id>http://www.zhangabc.com/</id>
+  <link href="http://zhanger.github.io/atom.xml" rel="self"/>
+  <link href="http://zhanger.github.io/"/>
+  <updated>2013-08-04T19:44:00+08:00</updated>
+  <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Autolayout in iOS]]></title>
-    <link href="http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios/"/>
+    <link href="http://zhanger.github.io/blog/2013/08/03/auto-layout-in-ios/"/>
     <updated>2013-08-03T00:00:00+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios</id>
+    <id>http://zhanger.github.io/blog/2013/08/03/auto-layout-in-ios</id>
     <content type="html"><![CDATA[<h2>Autolayout的优势</h2>
 
 <p>在autolayout之前，一般会使用frame来定位视图中的元素。</p>
@@ -119,9 +119,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[心中的猛虎--记Life of PI]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/12/03/lifeofpi/"/>
+    <link href="http://zhanger.github.io/blog/2012/12/03/lifeofpi/"/>
     <updated>2012-12-03T12:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/12/03/lifeofpi</id>
+    <id>http://zhanger.github.io/blog/2012/12/03/lifeofpi</id>
     <content type="html"><![CDATA[<p>传说人生是一个不断自问“什么是人生”的过程，在不同的年龄、经历、环境、甚至因为遇到不同的人或者天气，会有完全不同的答案。
 于是，有人说关于人生的讨论都是屁话。
 就不断变老的自己而言，少年时曾在书中苦苦寻找必须不断学习和认知这个世界是否必要的终极答案，也悲剧的发现，有些事情，你一旦知道了，便完全无法忘却，从此你便成了另外一个人。
@@ -171,9 +171,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[时间管理]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/11/13/time-management/"/>
+    <link href="http://zhanger.github.io/blog/2012/11/13/time-management/"/>
     <updated>2012-11-13T23:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/11/13/time-management</id>
+    <id>http://zhanger.github.io/blog/2012/11/13/time-management</id>
     <content type="html"><![CDATA[<p>今天参加了公司的一个培训，关于时间管理的，总结备忘：</p>
 
 <h3>什么是时间管理</h3>
@@ -221,9 +221,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[得到PHP脚本opcodes及其处理函数的小工具]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/09/17/opcode-dump/"/>
+    <link href="http://zhanger.github.io/blog/2012/09/17/opcode-dump/"/>
     <updated>2012-09-17T21:02:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/09/17/opcode-dump</id>
+    <id>http://zhanger.github.io/blog/2012/09/17/opcode-dump</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
 
 <h3>打印出opcode的处理函数</h3>
@@ -286,9 +286,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[跳出功G夫F网W的方法]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/08/31/go-agent/"/>
+    <link href="http://zhanger.github.io/blog/2012/08/31/go-agent/"/>
     <updated>2012-08-31T00:00:00+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/08/31/go-agent</id>
+    <id>http://zhanger.github.io/blog/2012/08/31/go-agent</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
 
 <p>YAML的格式导致jekyll未名的出错，花了几个小时的时间。  <br/>
@@ -332,9 +332,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[暴雪的迪亚不罗三]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/07/30/diablo-3/"/>
+    <link href="http://zhanger.github.io/blog/2012/07/30/diablo-3/"/>
     <updated>2012-07-30T23:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/07/30/diablo-3</id>
+    <id>http://zhanger.github.io/blog/2012/07/30/diablo-3</id>
     <content type="html"><![CDATA[<p>能在5秒内就让人全身心投入的事情，游戏绝对算得上其中一个。不过我以前总是下载10几G的游戏，安装，看过场动画，再删掉。可能很多游戏用心玩就会有乐趣，但能给自己一个理由，说服自己舍得付出时间成本，本身也是一件非常不容易的事情。</p>
 
 <h3>蛋疼的开始</h3>
@@ -382,9 +382,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[目前Mac下最快的输入法]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/05/13/mac-best-input-method/"/>
+    <link href="http://zhanger.github.io/blog/2012/05/13/mac-best-input-method/"/>
     <updated>2012-05-13T00:00:00+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/05/13/mac-best-input-method</id>
+    <id>http://zhanger.github.io/blog/2012/05/13/mac-best-input-method</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
 
 <h2>背景</h2>
@@ -425,9 +425,9 @@ Windows： 小狼毫 | Weasel
   
   <entry>
     <title type="html"><![CDATA[再见，WordPres哥]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/04/27/goodbye-wordpress/"/>
+    <link href="http://zhanger.github.io/blog/2012/04/27/goodbye-wordpress/"/>
     <updated>2012-04-27T00:00:00+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/04/27/goodbye-wordpress</id>
+    <id>http://zhanger.github.io/blog/2012/04/27/goodbye-wordpress</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
 
 <p>世间总有美好的事物渐渐变质，或许，它们没变，我们变了。</p>
@@ -450,9 +450,9 @@ Windows： 小狼毫 | Weasel
   
   <entry>
     <title type="html"><![CDATA[Phonegap超级浅尝]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/02/28/phonegap-test/"/>
+    <link href="http://zhanger.github.io/blog/2012/02/28/phonegap-test/"/>
     <updated>2012-02-28T01:50:50+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/02/28/phonegap-test</id>
+    <id>http://zhanger.github.io/blog/2012/02/28/phonegap-test</id>
     <content type="html"><![CDATA[<p>前阵子听 <a href="http://www.startfeel.com/">@leiyi同学</a> 聊到可以用PhoneGap来搞移动应用，回家做了功课，发现这货相当强大，可以使用HTML+JS+CSS来写出适用于ios/andorid/&#8230;等等平台的应用，正如它网站的宣传图：</p>
 
 <p><img src="http://pemsys.duapp.com/blog/phonegap-test.png" alt="官方广告^_^" /></p>
@@ -476,9 +476,9 @@ Windows： 小狼毫 | Weasel
   
   <entry>
     <title type="html"><![CDATA[[PHP扩展]获取$_SERVER变量的问题及解决]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals/"/>
+    <link href="http://zhanger.github.io/blog/2011/08/28/php-extentions-get-globals/"/>
     <updated>2011-08-28T03:02:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals</id>
+    <id>http://zhanger.github.io/blog/2011/08/28/php-extentions-get-globals</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
 
 <h2>背景</h2>
@@ -594,9 +594,9 @@ http://www.php.net/manual/en/ini.core.php#ini.register-globals
   
   <entry>
     <title type="html"><![CDATA[由opcodes找到其处理函数的方法]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements/"/>
+    <link href="http://zhanger.github.io/blog/2011/08/28/find-opcodes-to-implements/"/>
     <updated>2011-08-28T03:02:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements</id>
+    <id>http://zhanger.github.io/blog/2011/08/28/find-opcodes-to-implements</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory</p>
 
 <h2>Debug法：</h2>
@@ -785,9 +785,9 @@ http://www.php.net/manual/en/ini.core.php#ini.register-globals
   
   <entry>
     <title type="html"><![CDATA[VIM中换行替换之迷]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell/"/>
+    <link href="http://zhanger.github.io/blog/2011/08/08/vim-cr-lf-shell/"/>
     <updated>2011-08-08T17:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/08/08/vim-cr-lf-shell</id>
+    <id>http://zhanger.github.io/blog/2011/08/08/vim-cr-lf-shell</id>
     <content type="html"><![CDATA[<p>Included file &#8216;JB/setup&#8217; not found in _includes directory
 我们在shell下生成一个test文件：</p>
 
@@ -882,9 +882,9 @@ http://www.php.net/manual/en/ini.core.php#ini.register-globals
   
   <entry>
     <title type="html"><![CDATA[某个周未的随想（关于电子产品）]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele/"/>
+    <link href="http://zhanger.github.io/blog/2011/06/26/thinking-for-ele/"/>
     <updated>2011-06-26T04:26:09+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/06/26/thinking-for-ele</id>
+    <id>http://zhanger.github.io/blog/2011/06/26/thinking-for-ele</id>
     <content type="html"><![CDATA[<p>这是第一次用OmmWriter写东西，本来就知道，这个软件是一个非常有意境的软件，而真正用它来写点什么的时候，才感觉到一种平静，扑面而来，在轻轻的音乐声中，每次敲击的打字声……让人心生静谧。</p>
 
 <p>写点什么呢，发现自己最近的生活中充斥了电子产品、还有编程。终于有了心情，整理一下。</p>
@@ -913,9 +913,9 @@ http://www.php.net/manual/en/ini.core.php#ini.register-globals
   
   <entry>
     <title type="html"><![CDATA[从opcodes看{$a}与${a}的区别]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array/"/>
+    <link href="http://zhanger.github.io/blog/2010/11/23/php-opcodes-in-array/"/>
     <updated>2010-11-23T15:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array</id>
+    <id>http://zhanger.github.io/blog/2010/11/23/php-opcodes-in-array</id>
     <content type="html"><![CDATA[<p>突然用到类似{$a}与${a}这样子的表达式，大约知道两者的区别，用OPCODE来做一个验证，记录如下:</p>
 
 <h3>程序一：</h3>
@@ -969,9 +969,9 @@ FETCH_CONSTANT 是在所有的常量中寻找abc 这个变量(当然没找到)�
   
   <entry>
     <title type="html"><![CDATA[PHP扩展中自定义函数返回值与ZVAL]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval/"/>
+    <link href="http://zhanger.github.io/blog/2010/11/15/php-extentions-zval/"/>
     <updated>2010-11-15T11:21:11+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval</id>
+    <id>http://zhanger.github.io/blog/2010/11/15/php-extentions-zval</id>
     <content type="html"><![CDATA[<p>如要在PHP扩展中返回一个整数，那是相当的容易滴：<!--more--></p>
 
 <div>
@@ -1052,9 +1052,9 @@ RETVAL_RESOURCE(rval)</code></pre>
   
   <entry>
     <title type="html"><![CDATA[你得允许男人在工作时找点乐趣]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/09/05/find-fun/"/>
+    <link href="http://zhanger.github.io/blog/2010/09/05/find-fun/"/>
     <updated>2010-09-05T05:19:09+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/09/05/find-fun</id>
+    <id>http://zhanger.github.io/blog/2010/09/05/find-fun</id>
     <content type="html"><![CDATA[<h3>“你得充许男人在工作时找点乐趣……”</h3>
 
 <p>这句话星际2里一个战士在进行战斗时的台词。这句台词从某种意义上折射出暴雪团队在制作游戏时的“游戏心态”。 最近还看了一个记录片，名字叫《皮克斯的世界》，描述的是皮克斯的人是如何进行制作动画的工作，那个总导演说：当我第一次了解动画是如何制作出来的时候，我深深的爱上了这个事情，我决定我要用这个工作来养活自己。</p>
@@ -1069,9 +1069,9 @@ RETVAL_RESOURCE(rval)</code></pre>
   
   <entry>
     <title type="html"><![CDATA[三人搬家记]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/07/27/home/"/>
+    <link href="http://zhanger.github.io/blog/2010/07/27/home/"/>
     <updated>2010-07-27T22:19:09+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/07/27/home</id>
+    <id>http://zhanger.github.io/blog/2010/07/27/home</id>
     <content type="html"><![CDATA[<p>终于又搬家了，从福缘门，到唐家岭，最后住到龙华园。俺算是经历了一个人在北京的另类“北漂”了，呵呵。</p>
 
 <h3>首先，介绍本次搬家主角：</h3>
@@ -1100,9 +1100,9 @@ RETVAL_RESOURCE(rval)</code></pre>
   
   <entry>
     <title type="html"><![CDATA[初读中庸]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/07/06/zhongyong/"/>
+    <link href="http://zhanger.github.io/blog/2010/07/06/zhongyong/"/>
     <updated>2010-07-06T22:19:09+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/07/06/zhongyong</id>
+    <id>http://zhanger.github.io/blog/2010/07/06/zhongyong</id>
     <content type="html"><![CDATA[<p>本来以为，像《中庸》这样的书，都应该丢到鲁迅笔下的“故纸堆”里。前一阵，不知道大脑里哪根筋搭错了弦，或者说终于有一根筋搭对了弦，我买了《中庸》这本书，注解很精彩，是朱子的。</p>
 
 <p>读了几天，发现其实几百字甚至二三百字的小短文，竟如此难以“理解”，这里不是古文的阅读障碍，而是其中的道理，的确看起来简单而又博大。</p>

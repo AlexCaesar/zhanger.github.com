@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: php | Er.z]]></title>
-  <link href="http://www.zhangabc.com/blog/categories/php/atom.xml" rel="self"/>
-  <link href="http://www.zhangabc.com/"/>
-  <updated>2013-08-04T05:03:52+08:00</updated>
-  <id>http://www.zhangabc.com/</id>
+  <link href="http://zhanger.github.io/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://zhanger.github.io/"/>
+  <updated>2013-08-04T19:44:00+08:00</updated>
+  <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[得到PHP脚本opcodes及其处理函数的小工具]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/09/17/opcode-dump/"/>
+    <link href="http://zhanger.github.io/blog/2012/09/17/opcode-dump/"/>
     <updated>2012-09-17T21:02:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/09/17/opcode-dump</id>
+    <id>http://zhanger.github.io/blog/2012/09/17/opcode-dump</id>
     <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
 
 <h3>打印出opcode的处理函数</h3>
@@ -80,9 +80,9 @@
   
   <entry>
     <title type="html"><![CDATA[[PHP扩展]获取$_SERVER变量的问题及解决]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals/"/>
+    <link href="http://zhanger.github.io/blog/2011/08/28/php-extentions-get-globals/"/>
     <updated>2011-08-28T03:02:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/08/28/php-extentions-get-globals</id>
+    <id>http://zhanger.github.io/blog/2011/08/28/php-extentions-get-globals</id>
     <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
 
 <h2>背景</h2>
@@ -221,9 +221,9 @@ if (jit_init) {
   
   <entry>
     <title type="html"><![CDATA[由opcodes找到其处理函数的方法]]></title>
-    <link href="http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements/"/>
+    <link href="http://zhanger.github.io/blog/2011/08/28/find-opcodes-to-implements/"/>
     <updated>2011-08-28T03:02:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2011/08/28/find-opcodes-to-implements</id>
+    <id>http://zhanger.github.io/blog/2011/08/28/find-opcodes-to-implements</id>
     <content type="html"><![CDATA[<p>Included file 'JB/setup' not found in _includes directory</p>
 
 <h2>Debug法：</h2>
@@ -441,9 +441,9 @@ if (jit_init) {
   
   <entry>
     <title type="html"><![CDATA[从opcodes看{$a}与${a}的区别]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array/"/>
+    <link href="http://zhanger.github.io/blog/2010/11/23/php-opcodes-in-array/"/>
     <updated>2010-11-23T15:11:49+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/11/23/php-opcodes-in-array</id>
+    <id>http://zhanger.github.io/blog/2010/11/23/php-opcodes-in-array</id>
     <content type="html"><![CDATA[<p>突然用到类似{$a}与${a}这样子的表达式，大约知道两者的区别，用OPCODE来做一个验证，记录如下:</p>
 
 <h3>程序一：</h3>
@@ -500,9 +500,9 @@ FETCH_CONSTANT 是在所有的常量中寻找abc 这个变量(当然没找到)�
   
   <entry>
     <title type="html"><![CDATA[PHP扩展中自定义函数返回值与ZVAL]]></title>
-    <link href="http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval/"/>
+    <link href="http://zhanger.github.io/blog/2010/11/15/php-extentions-zval/"/>
     <updated>2010-11-15T11:21:11+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2010/11/15/php-extentions-zval</id>
+    <id>http://zhanger.github.io/blog/2010/11/15/php-extentions-zval</id>
     <content type="html"><![CDATA[<p>如要在PHP扩展中返回一个整数，那是相当的容易滴：<!--more-->
 <div>
   <pre><code class='c'>PHP_FUNCTION(rv_long)

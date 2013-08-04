@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mobile | Er.z]]></title>
-  <link href="http://www.zhangabc.com/blog/categories/mobile/atom.xml" rel="self"/>
-  <link href="http://www.zhangabc.com/"/>
-  <updated>2013-08-04T05:03:52+08:00</updated>
-  <id>http://www.zhangabc.com/</id>
+  <link href="http://zhanger.github.io/blog/categories/mobile/atom.xml" rel="self"/>
+  <link href="http://zhanger.github.io/"/>
+  <updated>2013-08-04T19:44:00+08:00</updated>
+  <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Autolayout in iOS]]></title>
-    <link href="http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios/"/>
+    <link href="http://zhanger.github.io/blog/2013/08/03/auto-layout-in-ios/"/>
     <updated>2013-08-03T00:00:00+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2013/08/03/auto-layout-in-ios</id>
+    <id>http://zhanger.github.io/blog/2013/08/03/auto-layout-in-ios</id>
     <content type="html"><![CDATA[<h2>Autolayout的优势</h2>
 
 <p>在autolayout之前，一般会使用frame来定位视图中的元素。</p>
@@ -120,9 +120,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Phonegap超级浅尝]]></title>
-    <link href="http://www.zhangabc.com/blog/2012/02/28/phonegap-test/"/>
+    <link href="http://zhanger.github.io/blog/2012/02/28/phonegap-test/"/>
     <updated>2012-02-28T01:50:50+08:00</updated>
-    <id>http://www.zhangabc.com/blog/2012/02/28/phonegap-test</id>
+    <id>http://zhanger.github.io/blog/2012/02/28/phonegap-test</id>
     <content type="html"><![CDATA[<p>前阵子听 <a href="http://www.startfeel.com/">@leiyi同学</a> 聊到可以用PhoneGap来搞移动应用，回家做了功课，发现这货相当强大，可以使用HTML+JS+CSS来写出适用于ios/andorid/...等等平台的应用，正如它网站的宣传图：</p>
 
 <p><img src="http://pemsys.duapp.com/blog/phonegap-test.png" alt="官方广告^_^" /></p>
