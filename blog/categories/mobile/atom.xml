@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mobile | Er.z]]></title>
   <link href="http://zhanger.github.io/blog/categories/mobile/atom.xml" rel="self"/>
   <link href="http://zhanger.github.io/"/>
-  <updated>2013-08-04T21:51:28+08:00</updated>
+  <updated>2013-08-05T17:13:22+08:00</updated>
   <id>http://zhanger.github.io/</id>
   <author>
     <name><![CDATA[Er.Z]]></name>
@@ -30,7 +30,7 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 
 <p>CGRect对象定义中的四个参数为 横坐标、纵坐标、宽、高。
 把CGRect对象赋值并设置到UIView的frame属性，就可以实现视图的大小及位置的定义。
-理论上这种方法是可以解决所有的问题，不过在实际操作中，有两种情况使用frame是非常不方便的：</p>
+理论上这种方法是可以解决所有的问题，不过在实际操作中，有两种我遇到的情况使用frame不那么方便：</p>
 
 <ol>
 <li>设备翻转需要视图位置做出相应的调整；</li>
@@ -39,9 +39,9 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 
 
 <p><a href="http://www.flickr.com/photos/99843428@N08/9433535483/" title="Flickr 上 olfephg 的 autolayout"><img src="http://farm3.staticflickr.com/2881/9433535483_29da9fb770_o.png" width="301" height="408" alt="autolayout"></a>
-(截图来自《cnBeta X 非官方IT新闻阅读器》，有兴趣可以去app store上下载）</p>
+(截图来自《cnBeta X 非官方IT新闻阅读器》，有兴趣可以去app store下载）</p>
 
-<p>上面这两种情形出现时，一般要写大量的定位计算代码，而且升级比较麻烦，于是出现了Autolayout来改善frame计算工作过繁重的问题；</p>
+<p>上面这两种情形出现时，一般要写比较多而且不那么优雅的定位计算代码，而且升级比较麻烦，苹果给出解决方案是Autolayout来改善frame计算工作过繁重的问题；</p>
 
 <h2>Autolayout原理</h2>
 
@@ -55,7 +55,7 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 
 <p>Autolayout的使用是比较方便的，主要是生成NSLayoutConstraint对象，然后把constraint加到父视图就可以了。</p>
 
-<h3>例一</h3>
+<h3>DEMO</h3>
 
 <p><img src="http://farm6.staticflickr.com/5444/9429251493_8a9958c5b1_o.png" alt="demo1" /></p>
 
@@ -88,10 +88,6 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">UIView</span> <span class="o">*</span> <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
@@ -104,20 +100,16 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 </span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">B</span><span class="p">];</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">UIView</span> <span class="o">*</span> <span class="n">rootView</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">;</span>
-</span><span class='line'>
 </span><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">viewsDictionary</span> <span class="o">=</span> <span class="n">NSDictionaryOfVariableBindings</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">rootView</span><span class="p">);</span>
 </span><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">verticalConstraints</span>   <span class="o">=</span> <span class="p">[</span><span class="n">NSLayoutConstraint</span> <span class="nl">constraintsWithVisualFormat:</span><span class="s">@&quot;V:|-50-[A(80)]-10-[B(80)]&quot;</span>
 </span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span> <span class="nl">metrics:</span><span class="nb">nil</span>
 </span><span class='line'>                                                                           <span class="nl">views:</span><span class="n">viewsDictionary</span><span class="p">];</span>
 </span><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">horizontalAConstraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSLayoutConstraint</span> <span class="nl">constraintsWithVisualFormat:</span><span class="s">@&quot;H:|-10-[A]-10-|&quot;</span>
-</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span>
-</span><span class='line'>                                                                         <span class="nl">metrics:</span><span class="nb">nil</span>
+</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span> <span class="nl">metrics:</span><span class="nb">nil</span>
 </span><span class='line'>                                                                           <span class="nl">views:</span><span class="n">viewsDictionary</span><span class="p">];</span>
 </span><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">horizontalBConstraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSLayoutConstraint</span> <span class="nl">constraintsWithVisualFormat:</span><span class="s">@&quot;H:|-10-[B]-10-|&quot;</span>
-</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span>
-</span><span class='line'>                                                                         <span class="nl">metrics:</span><span class="nb">nil</span>
+</span><span class='line'>                                                                         <span class="nl">options:</span><span class="mi">0</span> <span class="nl">metrics:</span><span class="nb">nil</span>
 </span><span class='line'>                                                                           <span class="nl">views:</span><span class="n">viewsDictionary</span><span class="p">];</span>
-</span><span class='line'>
 </span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addConstraints:</span><span class="n">verticalConstraints</span><span class="p">];</span>
 </span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addConstraints:</span><span class="n">horizontalAConstraints</span><span class="p">];</span>
 </span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addConstraints:</span><span class="n">horizontalBConstraints</span><span class="p">];</span>
@@ -126,7 +118,25 @@ CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</p></blockquote>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h1>to be continue…</h1>
+<p>这个例子是“一步到位”的使用了visual format lanuage, 如 “V:|-50-[A(80)]-10-[B(80)]”
+表示：在垂直方向，A距父视图50，A宽80，B距A为10，B宽80, 与frame相比明显节省了代码。</p>
+
+<p>关于苹果的VFL(visual format lanuage),可以参考下表
+<a href="http://www.flickr.com/photos/99843428@N08/9443359724/" title="Flickr 上 olfephg 的 vfl"><img src="http://farm8.staticflickr.com/7394/9443359724_0bc5bf0e22_o.png" width="938" height="657" alt="vfl"></a></p>
+
+<p>当然，如果只是单一属性的设定，也可以使用苹果的另一个api:[NSLayoutConstraint + constraintWithItem:attribute:relatedBy:toItem:attribute:multiplier:constant:]
+，参见apple官方文档 。</p>
+
+<h2>Autolayout一些使用中的问题</h2>
+
+<p>Autolayout比较灵活，同时也容易出现问题，归纳我遇到的：</p>
+
+<ol>
+<li>Ambiguous Layout，如果是使用了storyboard或者是xib绘制的对象，基本上不会出现这个问题，因为“模糊的定义”都被自动赋上了值，如果对象是自己生成的，则要注意是不是明确的指明了大小、位置（某些带sizeToFit的对象可以不指定大小）；</li>
+<li>Unsatisfiable Constraints，这个一般是constraints的VFL没写对，检查再改改就好了；</li>
+<li>Unable to simultaneously satisfy constraints. 这个应该可以有多种原因导致，我遇到的情形是由于对象的translatesAutoresizingMaskIntoConstraints属性没有被设置成NO ；</li>
+</ol>
+
 ]]></content>
   </entry>
   
